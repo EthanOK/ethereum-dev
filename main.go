@@ -16,20 +16,13 @@ func main() {
 		return
 	}
 	address := "0x95B3Aad7f20E78a0e4DcEB9c23beca4e55ebdDF6"
-	balance := utils.GetBalance(client, address)
+	balance := utils.GetETHBalance(client, address)
 	fmt.Println("Account balance:", balance, "WEI")
 	// wei to eth
-
+	fmt.Println("Account balance:", utils.WeiToEther(balance), "ETH")
 	// Get the latest known block
-	block := utils.GetLatestBlock(client)
+	blockNumber, blockTime := utils.GetNowBlockNumberAndBlockTime(client)
+	fmt.Println("Latest Block Number:", blockNumber)
+	fmt.Println("Latest Block Time:", blockTime)
 
-	fmt.Println("block Hash:", block.Hash())
-
-	blockTime := block.Time()
-	fmt.Println("Latest block Number:", block.Number().Uint64())
-	fmt.Println("Latest block Time:", blockTime)
-	// 打印 本地时间戳
-	systemTime := utils.GetSystemTimeStamp()
-
-	fmt.Println("System Time:", systemTime)
 }

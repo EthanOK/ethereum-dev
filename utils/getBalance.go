@@ -9,7 +9,7 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
-func GetBalance(client *ethclient.Client, address string) *big.Int {
+func GetETHBalance(client *ethclient.Client, address string) *big.Int {
 
 	account := common.HexToAddress(address)
 	balance, err := client.BalanceAt(context.Background(), account, nil)
