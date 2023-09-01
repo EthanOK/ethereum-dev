@@ -18,11 +18,15 @@ https://geth.ethereum.org/docs/tools/abigen
 
 `abigen --abi erc20.abi --pkg erc20 --type ERC20 --out erc20.go`
 
-## Post Json
+## Request
+
+### Post(json)
 
 `curl http://localhost:8888/postjson1 -X POST -H "Content-Type: application/json" -d "{\"message\":\"Hi Go\"}"`
 
 `curl http://localhost:8888/postjson2 -X POST -H "Content-Type: application/json" -d "{\"message\":\"Hi Go\"}"`
+
+### Get
 
 # config
 
