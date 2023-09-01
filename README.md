@@ -23,3 +23,7 @@ https://geth.ethereum.org/docs/tools/abigen
 `curl http://localhost:8888/postjson1 -X POST -H "Content-Type: application/json" -d "{\"message\":\"Hi Go\"}"`
 
 `curl http://localhost:8888/postjson2 -X POST -H "Content-Type: application/json" -d "{\"message\":\"Hi Go\"}"`
+
+# config
+
+go version: 1.20.7
