@@ -1,3 +1,5 @@
+# 此项目在 GOPATH/src 目录下
+
 # Ethereum Development with Go
 
 https://goethereumbook.org/zh/
