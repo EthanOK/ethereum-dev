@@ -3,13 +3,15 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 
+	"gocode.ethan/ethereum-dev/getclient"
 	"gocode.ethan/ethereum-dev/utils"
 )
 
 func main() {
 
-	/* 	client, err := getclient.GetEthClient()
+		client, err := getclient.GetEthClient()
 	   	if err != nil {
 	   		log.Fatal(err)
 	   		return
@@ -30,12 +32,13 @@ func main() {
 	   	decimals := metadata.Decimals
 	   	usdtBalance := utils.GetERC20Balance(client, contractUSDT, account)
 	   	fmt.Println("Account balance:", utils.BigToDecimals(usdtBalance,decimals), symbol)
-	*/
+	
 
 	privateKey := utils.GeneratePrivateKeyHasPrefix()
+	fmt.Println("privateKey:", privateKey)
 	address := utils.PrivateKeyToAddress(privateKey)
 	isAddress := utils.CheckIsAddress(address)
-	fmt.Println(address, "is Address: ", isAddress)
+	fmt.Println(address, "is Address:", isAddress)
 
 	type Person struct {
 		Name  string `json:"name"`
@@ -48,8 +51,8 @@ func main() {
 
 	// 解析 JSON 数据到结构体
 	var person Person
-	err := json.Unmarshal([]byte(jsonData), &person)
-	if err != nil {
+	err_ := json.Unmarshal([]byte(jsonData), &person)
+	if err_ != nil {
 		fmt.Println("Error decoding JSON:", err)
 		return
 	}
