@@ -1,17 +1,16 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"log"
 
-	"gocode.ethan/ethereum-dev/getclient"
 	"gocode.ethan/ethereum-dev/utils"
 )
 
+var password = "goodboy"
+
 func main() {
 
-		client, err := getclient.GetEthClient()
+	/* client, err := getclient.GetEthClient()
 	   	if err != nil {
 	   		log.Fatal(err)
 	   		return
@@ -32,7 +31,7 @@ func main() {
 	   	decimals := metadata.Decimals
 	   	usdtBalance := utils.GetERC20Balance(client, contractUSDT, account)
 	   	fmt.Println("Account balance:", utils.BigToDecimals(usdtBalance,decimals), symbol)
-	
+
 
 	privateKey := utils.GeneratePrivateKeyHasPrefix()
 	fmt.Println("privateKey:", privateKey)
@@ -74,5 +73,19 @@ func main() {
 
 	// 打印 JSON 字符串
 	fmt.Println(jsonString)
+	*/
 
+	// KeyStore
+	/* pathdir := "./temp"
+	utils.GetKeyStore(pathdir, password)
+
+	kspath := "./temp/UTC--2023-09-02T06-37-57.096776700Z--99e972b2c4689fba2aa8f31a6cebbdd12e3242c9"
+	utils.ImportKeyStore(kspath, password)
+
+	utils.GetAccountsByKeyStoreInWalletsFile()
+	*/
+
+	// 0x9a1f783ea8e236c44859a179e597791b7c066e84 => 0x9a1F783EA8E236C44859a179E597791b7c066E84
+	addressE := utils.FormattedAddress("0x9a1f783ea8e236c44859a179e597791b7c066e84")
+	fmt.Println(addressE)
 }
