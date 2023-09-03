@@ -102,4 +102,9 @@ func main() {
 
 	listenevents.ListenTransferERC20(client, "0xdac17f958d2ee523a2206206994597c13d831ec7")
 
+	// go async.AsyncF()
+
+	// // 等待一段时间，以模拟主程序执行
+	// time.Sleep(10 * time.Second)
+
 }
