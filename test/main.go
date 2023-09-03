@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"gocode.ethan/ethereum-dev/filters"
 	"gocode.ethan/ethereum-dev/getclient"
+	"gocode.ethan/ethereum-dev/listenevents"
 	"gocode.ethan/ethereum-dev/utils"
 )
 
@@ -97,7 +97,9 @@ func main() {
 	// isContract := utils.CheckAddressIsContract(client, "0xdac17f958d2ee523a2206206994597c13d831ec7")
 	// fmt.Println(isContract)
 
-	filters.TransferLogsERC20(client, "0xdac17f958d2ee523a2206206994597c13d831ec7",
-		utils.Uint64ToString(currentBlockNumber), "")
+	// filters.TransferLogsERC20(client, "0xdac17f958d2ee523a2206206994597c13d831ec7",
+	// 	utils.Uint64ToString(currentBlockNumber), "")
+
+	listenevents.ListenTransferERC20(client, "0xdac17f958d2ee523a2206206994597c13d831ec7")
 
 }
