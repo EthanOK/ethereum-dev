@@ -100,11 +100,29 @@ func main() {
 	// filters.TransferLogsERC20(client, "0xdac17f958d2ee523a2206206994597c13d831ec7",
 	// 	utils.Uint64ToString(currentBlockNumber), "")
 
-	listenevents.ListenTransferERC20(client, "0xdac17f958d2ee523a2206206994597c13d831ec7")
+	/* 	go async.AsyncF()
 
-	// go async.AsyncF()
+	   	// 使用通道来等待goroutines完成
+	   	done := make(chan bool)
 
-	// // 等待一段时间，以模拟主程序执行
-	// time.Sleep(10 * time.Second)
+	   	go func() {
+	   		listenevents.ListenTransferERC20(client, "0xdac17f958d2ee523a2206206994597c13d831ec7")
+	   		done <- true
+	   	}()
 
+	   	// 等待goroutines完成
+	   	<-done */
+
+	/* db := utils.GetMysqlDB()
+	// 关闭整个程序之前执行db.Close()
+	defer db.Close()
+
+	utils.Query(db, "SELECT id, `key`, value FROM aggregator_ethan.`system`;")
+
+	utils.Insert(db, "INSERT INTO `system` (`key`, value) VALUES(?, ?);", "ens", "ether.eth")
+
+	utils.Query(db, "SELECT id, `key`, value FROM aggregator_ethan.`system`;") */
+	go listenevents.StartListenEvents()
+
+	select {}
 }

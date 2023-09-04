@@ -2,7 +2,6 @@ package filters
 
 import (
 	"context"
-	"fmt"
 	"log"
 
 	"github.com/ethereum/go-ethereum"
@@ -25,7 +24,12 @@ func TransferLogsERC20(client *ethclient.Client, tokenAddress string, fromBlock 
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("logs length:", len(logs))
+
+	// 获取 mysql db
+	db := utils.GetMysqlDB()
+	// 关闭整个程序之前执行db.Close()
+	defer db.Close()
+
 	for _, log := range logs {
 		/* 		// 结构体转json数据
 		   		jsonData_, err := json.Marshal(log)
@@ -38,18 +42,22 @@ func TransferLogsERC20(client *ethclient.Client, tokenAddress string, fromBlock 
 		   		// 打印 JSON 字符串
 		   		fmt.Println(jsonString) */
 
-		// contractAddress := log.Address.Hex()
+		token := log.Address.Hex()
 		txHash := log.TxHash.Hex()
+		blockNumber := utils.Uint64ToString(log.BlockNumber)
 		topics := log.Topics
 		from := common.BigToAddress(topics[1].Big()).Hex()
 
 		to := common.BigToAddress(topics[2].Big()).Hex()
 
-		value := common.BytesToHash(log.Data).Big()
-		fmt.Println("txHash:", txHash)
-		fmt.Println(from, "=>", to)
-		fmt.Println("amount:", value)
-		fmt.Println("````````````````````````````````````````````````````````````````")
+		value := common.BytesToHash(log.Data).Big().String()
+
+		// fmt.Println("txHash:", txHash)
+		// fmt.Println(from, "=>", to)
+		// fmt.Println("amount:", value)
+		// fmt.Println("````````````````````````````````````````````````````````````````")
+		insertSql := "INSERT IGNORE INTO event_transfer_erc20 (token, fromAddress, toAddress, value, blockNumber, transactionHash) VALUES(?, ?, ?, ?, ?, ?);"
+		utils.Insert(db, insertSql, token, from, to, value, blockNumber, txHash)
 
 	}
 }
