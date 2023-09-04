@@ -96,7 +96,9 @@ func TransferLogsERC721(client *ethclient.Client, fromBlock string, toBlock stri
 		}}
 	logs, err := client.FilterLogs(context.Background(), filterQuery)
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println("FilterLogs err:", err)
+		fromBlock_ := utils.StringToBig(fromBlock)
+		return fromBlock_.Uint64()
 	}
 
 	// handledataERC721(logs)
