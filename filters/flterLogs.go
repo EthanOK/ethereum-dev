@@ -112,7 +112,7 @@ func handledataERC721Print(logs []types.Log, lastBlockNumber uint64) uint64 {
 		for _, log := range logs {
 
 			// token := log.Address.Hex()
-			// txHash := log.TxHash.Hex()
+			txHash := log.TxHash.Hex()
 			// blockNumber := utils.Uint64ToString(log.BlockNumber)
 			topics := log.Topics
 			if len(topics) == 4 {
@@ -121,7 +121,7 @@ func handledataERC721Print(logs []types.Log, lastBlockNumber uint64) uint64 {
 
 				to := common.BigToAddress(topics[2].Big()).Hex()
 				if from != config.ZeroAddress && to != config.ZeroAddress {
-					fmt.Println("flter blockNumber:", log.BlockNumber)
+					fmt.Println("flter blockNumber:", log.BlockNumber, txHash)
 					lastBlockNumber = log.BlockNumber
 					// utils.StructToString(log)
 
