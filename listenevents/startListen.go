@@ -15,7 +15,8 @@ func StartListenEvents() {
 	done := make(chan bool)
 
 	go func() {
-		ListenTransferERC20(client, "0xdac17f958d2ee523a2206206994597c13d831ec7")
+		// ListenTransferERC20(client, "0xdac17f958d2ee523a2206206994597c13d831ec7")
+		ListenTransferERC721(client)
 		done <- true
 	}()
 
