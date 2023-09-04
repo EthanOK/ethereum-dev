@@ -5,7 +5,6 @@ import (
 	"log"
 
 	"gocode.ethan/ethereum-dev/getclient"
-	"gocode.ethan/ethereum-dev/listenevents"
 	"gocode.ethan/ethereum-dev/utils"
 )
 
@@ -19,6 +18,8 @@ func main() {
 	}
 	currentBlockNumber, _ := utils.GetNowBlockNumberAndBlockTime(client)
 	fmt.Println("current Block Number:", currentBlockNumber)
+	nonce := utils.GetAccountNonce(client, "0x95B3Aad7f20E78a0e4DcEB9c23beca4e55ebdDF6")
+	fmt.Println("current Nonce:", nonce)
 	/*
 		   	account := "0x95B3Aad7f20E78a0e4DcEB9c23beca4e55ebdDF6"
 		   	// Get the balance of an account
@@ -122,7 +123,8 @@ func main() {
 	utils.Insert(db, "INSERT INTO `system` (`key`, value) VALUES(?, ?);", "ens", "ether.eth")
 
 	utils.Query(db, "SELECT id, `key`, value FROM aggregator_ethan.`system`;") */
-	go listenevents.StartListenEvents()
 
-	select {}
+	/* go listenevents.StartListenEvents()
+
+	select {} */
 }

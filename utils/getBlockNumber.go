@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 
+	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
 )
@@ -31,4 +32,14 @@ func GetLatestBlock(client *ethclient.Client) *types.Block {
 		log.Fatal(err)
 	}
 	return block
+}
+
+// GetAccountNonce
+func GetAccountNonce(client *ethclient.Client, account string) uint64 {
+	address := common.HexToAddress(account)
+	nonce, err := client.PendingNonceAt(context.Background(), address)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return nonce
 }
