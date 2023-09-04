@@ -2,10 +2,12 @@ package filters
 
 import (
 	"context"
+	"fmt"
 	"log"
 
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"gocode.ethan/ethereum-dev/utils"
 )
@@ -24,7 +26,12 @@ func TransferLogsERC20(client *ethclient.Client, tokenAddress string, fromBlock 
 	if err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println("blockNumber:", fromBlock)
+	// handledata(logs)
+	handledataPrint(logs)
 
+}
+func handledata(logs []types.Log) {
 	// 获取 mysql db
 	db := utils.GetMysqlDB()
 	// 关闭整个程序之前执行db.Close()
@@ -32,15 +39,15 @@ func TransferLogsERC20(client *ethclient.Client, tokenAddress string, fromBlock 
 
 	for _, log := range logs {
 		/* 		// 结构体转json数据
-		   		jsonData_, err := json.Marshal(log)
-		   		if err != nil {
-		   			fmt.Println("Error encoding JSON:", err)
-		   			return
-		   		}
-		   		// JSON数据转换为字符串
-		   		jsonString := string(jsonData_)
-		   		// 打印 JSON 字符串
-		   		fmt.Println(jsonString) */
+		   jsonData_, err := json.Marshal(log)
+		   if err != nil {
+			   fmt.Println("Error encoding JSON:", err)
+			   return
+		   }
+		   // JSON数据转换为字符串
+		   jsonString := string(jsonData_)
+		   // 打印 JSON 字符串
+		   fmt.Println(jsonString) */
 
 		token := log.Address.Hex()
 		txHash := log.TxHash.Hex()
@@ -58,6 +65,40 @@ func TransferLogsERC20(client *ethclient.Client, tokenAddress string, fromBlock 
 		// fmt.Println("````````````````````````````````````````````````````````````````")
 		insertSql := "INSERT IGNORE INTO event_transfer_erc20 (token, fromAddress, toAddress, value, blockNumber, transactionHash) VALUES(?, ?, ?, ?, ?, ?);"
 		utils.Insert(db, insertSql, token, from, to, value, blockNumber, txHash)
-
 	}
+}
+
+func handledataPrint(logs []types.Log) {
+	if len(logs) > 0 {
+		for _, log := range logs {
+			/* 		// 结构体转json数据
+			   jsonData_, err := json.Marshal(log)
+			   if err != nil {
+				   fmt.Println("Error encoding JSON:", err)
+				   return
+			   }
+			   // JSON数据转换为字符串
+			   jsonString := string(jsonData_)
+			   // 打印 JSON 字符串
+			   fmt.Println(jsonString) */
+
+			// token := log.Address.Hex()
+			txHash := log.TxHash.Hex()
+			// blockNumber := utils.Uint64ToString(log.BlockNumber)
+			topics := log.Topics
+			from := common.BigToAddress(topics[1].Big()).Hex()
+
+			to := common.BigToAddress(topics[2].Big()).Hex()
+
+			value := common.BytesToHash(log.Data).Big().String()
+
+			fmt.Println("txHash:", txHash)
+			fmt.Println(from, "=>", to)
+			fmt.Println("amount:", value)
+			fmt.Println("```````")
+
+		}
+		fmt.Println("```````````````````````````````````````````````")
+	}
+
 }

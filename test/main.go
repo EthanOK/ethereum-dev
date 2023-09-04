@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"gocode.ethan/ethereum-dev/getclient"
+	"gocode.ethan/ethereum-dev/listenevents"
 	"gocode.ethan/ethereum-dev/utils"
 )
 
@@ -124,7 +125,7 @@ func main() {
 
 	utils.Query(db, "SELECT id, `key`, value FROM aggregator_ethan.`system`;") */
 
-	/* go listenevents.StartListenEvents()
+	go listenevents.StartListenEvents()
 
-	select {} */
+	select {}
 }

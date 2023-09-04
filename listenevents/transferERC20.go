@@ -24,7 +24,7 @@ func ListenTransferERC20(client *ethclient.Client, tokenAddress string) {
 
 		for {
 			// 在每次循环中执行操作
-			go filters.TransferLogsERC20(client, "0xdac17f958d2ee523a2206206994597c13d831ec7",
+			filters.TransferLogsERC20(client, tokenAddress,
 				utils.Uint64ToString(lastBlockNumber), "")
 			lastBlockNumber++
 			// 添加一些延迟
