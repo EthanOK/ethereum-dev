@@ -7,7 +7,12 @@ import (
 )
 
 func StartListenEvents() {
-	client, err := getclient.GetEthClient()
+	/* 	ethclient, err := getclient.GetEthClient()
+	   	if err != nil {
+	   		log.Fatal(err)
+	   		return
+	   	} */
+	bscclient, err := getclient.GetBscClient()
 	if err != nil {
 		log.Fatal(err)
 		return
@@ -16,7 +21,8 @@ func StartListenEvents() {
 
 	go func() {
 		// ListenTransferERC20(client, "0xdac17f958d2ee523a2206206994597c13d831ec7")
-		ListenTransferERC721(client)
+		// ListenTransferERC721_ETH(ethclient)
+		ListenTransferERC721_BSC(bscclient)
 		done <- true
 	}()
 

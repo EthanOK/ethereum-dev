@@ -9,6 +9,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
+	"gocode.ethan/ethereum-dev/config"
 	"gocode.ethan/ethereum-dev/utils"
 )
 
@@ -38,16 +39,7 @@ func handledataERC20(logs []types.Log) {
 	defer db.Close()
 
 	for _, log := range logs {
-		/* 		// 结构体转json数据
-		   jsonData_, err := json.Marshal(log)
-		   if err != nil {
-			   fmt.Println("Error encoding JSON:", err)
-			   return
-		   }
-		   // JSON数据转换为字符串
-		   jsonString := string(jsonData_)
-		   // 打印 JSON 字符串
-		   fmt.Println(jsonString) */
+		utils.StructToString(log)
 
 		token := log.Address.Hex()
 		txHash := log.TxHash.Hex()
@@ -71,17 +63,7 @@ func handledataERC20(logs []types.Log) {
 func handledataERC20Print(logs []types.Log) {
 	if len(logs) > 0 {
 		for _, log := range logs {
-			/* 		// 结构体转json数据
-			   jsonData_, err := json.Marshal(log)
-			   if err != nil {
-				   fmt.Println("Error encoding JSON:", err)
-				   return
-			   }
-			   // JSON数据转换为字符串
-			   jsonString := string(jsonData_)
-			   // 打印 JSON 字符串
-			   fmt.Println(jsonString) */
-
+			utils.StructToString(log)
 			// token := log.Address.Hex()
 			txHash := log.TxHash.Hex()
 			// blockNumber := utils.Uint64ToString(log.BlockNumber)
@@ -103,12 +85,12 @@ func handledataERC20Print(logs []types.Log) {
 
 }
 
-func TransferLogsERC721(client *ethclient.Client, fromBlock string, toBlock string) {
+func TransferLogsERC721(client *ethclient.Client, fromBlock string, toBlock string) uint64 {
 
 	transferEventTopic := common.HexToHash("0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef")
 	filterQuery := ethereum.FilterQuery{
 		FromBlock: utils.StringToBig(fromBlock),
-		ToBlock:   utils.StringToBig(toBlock),
+		ToBlock:   nil,
 		Topics: [][]common.Hash{
 			{transferEventTopic},
 		}}
@@ -116,45 +98,48 @@ func TransferLogsERC721(client *ethclient.Client, fromBlock string, toBlock stri
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("blockNumber:", fromBlock)
+
 	// handledataERC721(logs)
-	handledataERC721Print(logs)
+	fromBlock_ := utils.StringToBig(fromBlock)
+	lastBlockNumber := handledataERC721Print(logs, fromBlock_.Uint64())
+	return lastBlockNumber
 
 }
-func handledataERC721Print(logs []types.Log) {
-	if len(logs) > 0 {
-		for _, log := range logs {
-			/* 		// 结构体转json数据
-			   jsonData_, err := json.Marshal(log)
-			   if err != nil {
-				   fmt.Println("Error encoding JSON:", err)
-				   return
-			   }
-			   // JSON数据转换为字符串
-			   jsonString := string(jsonData_)
-			   // 打印 JSON 字符串
-			   fmt.Println(jsonString) */
+func handledataERC721Print(logs []types.Log, lastBlockNumber uint64) uint64 {
 
-			token := log.Address.Hex()
-			txHash := log.TxHash.Hex()
+	len_ := len(logs)
+	if len_ > 0 {
+		for _, log := range logs {
+
+			// token := log.Address.Hex()
+			// txHash := log.TxHash.Hex()
 			// blockNumber := utils.Uint64ToString(log.BlockNumber)
 			topics := log.Topics
 			if len(topics) == 4 {
+
 				from := common.BigToAddress(topics[1].Big()).Hex()
 
 				to := common.BigToAddress(topics[2].Big()).Hex()
+				if from != config.ZeroAddress && to != config.ZeroAddress {
+					fmt.Println("flter blockNumber:", log.BlockNumber)
+					lastBlockNumber = log.BlockNumber
+					// utils.StructToString(log)
 
-				tokenId := topics[3].Big()
+					// tokenId := topics[3].Big()
 
-				fmt.Println("txHash:", txHash)
-				fmt.Println(from, "=>", to)
-				fmt.Println("token:", token)
-				fmt.Println("tokenId:", tokenId)
-				fmt.Println("```````")
+					// fmt.Println("txHash:", txHash)
+					// fmt.Println(from, "=>", to)
+					// fmt.Println("token:", token)
+					// fmt.Println("tokenId:", tokenId)
+					// fmt.Println("```````")
+				}
 			}
 
 		}
-		fmt.Println("```````````````````````````````````````````````")
+		// fmt.Println("```````````````````````````````````````````````")
+		return uint64(lastBlockNumber)
+	} else {
+		return uint64(lastBlockNumber)
 	}
 
 }

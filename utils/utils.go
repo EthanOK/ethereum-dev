@@ -1,6 +1,8 @@
 package utils
 
 import (
+	"encoding/json"
+	"fmt"
 	"math/big"
 
 	"github.com/ethereum/go-ethereum/common"
@@ -37,4 +39,19 @@ func Uint64ToString(num uint64) string {
 // uint64 to big
 func Uint64ToBig(num uint64) *big.Int {
 	return new(big.Int).SetUint64(num)
+}
+
+// structToString
+func StructToString(s interface{}) string {
+	// 结构体转json数据
+	jsonData_, err := json.Marshal(s)
+	if err != nil {
+		fmt.Println("Error encoding JSON:", err)
+		return ""
+	}
+	// JSON数据转换为字符串
+	jsonString := string(jsonData_)
+	// 打印 JSON 字符串
+	fmt.Println(jsonString)
+	return jsonString
 }
