@@ -115,7 +115,7 @@ func main() {
 	   	// 等待goroutines完成
 	   	<-done */
 
-	/* db := utils.GetMysqlDB()
+	/* db := utils.GetMysqlDB(
 	// 关闭整个程序之前执行db.Close()
 	defer db.Close()
 
