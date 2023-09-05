@@ -101,9 +101,9 @@ func TransferLogsERC721(client *ethclient.Client, fromBlock string, toBlock stri
 		return fromBlock_.Uint64()
 	}
 
-	// handledataERC721(logs)
 	fromBlock_ := utils.StringToBig(fromBlock)
-	lastBlockNumber := handledataERC721Print(logs, fromBlock_.Uint64())
+	// handledataERC721Print(logs, fromBlock_.Uint64())
+	lastBlockNumber := handledataERC721(logs, fromBlock_.Uint64())
 	return lastBlockNumber
 
 }
@@ -134,6 +134,46 @@ func handledataERC721Print(logs []types.Log, lastBlockNumber uint64) uint64 {
 					// fmt.Println("token:", token)
 					// fmt.Println("tokenId:", tokenId)
 					// fmt.Println("```````")
+				}
+			}
+
+		}
+		// fmt.Println("```````````````````````````````````````````````")
+		return uint64(lastBlockNumber)
+	} else {
+		return uint64(lastBlockNumber)
+	}
+
+}
+func handledataERC721(logs []types.Log, lastBlockNumber uint64) uint64 {
+
+	len_ := len(logs)
+	if len_ > 0 {
+		// 获取 mysql db
+		db := utils.GetMysqlDB()
+		// 关闭整个程序之前执行db.Close()
+		defer db.Close()
+
+		for _, log := range logs {
+
+			token := log.Address.Hex()
+			txHash := log.TxHash.Hex()
+			blockNumber := utils.Uint64ToString(log.BlockNumber)
+			topics := log.Topics
+			if len(topics) == 4 {
+
+				from := common.BigToAddress(topics[1].Big()).Hex()
+
+				to := common.BigToAddress(topics[2].Big()).Hex()
+				if from != config.ZeroAddress && to != config.ZeroAddress {
+					fmt.Println("flter blockNumber:", log.BlockNumber, txHash)
+					lastBlockNumber = log.BlockNumber
+					// utils.StructToString(log)
+
+					tokenId := topics[3].Big().String()
+					insertSql := "INSERT IGNORE INTO event_transfer_erc721_bsc (token, tokenId,fromAddress, toAddress, blockNumber, transactionHash) VALUES(?, ?, ?, ?, ?, ?);"
+					utils.Insert(db, insertSql, token, tokenId, from, to, blockNumber, txHash)
+
 				}
 			}
 

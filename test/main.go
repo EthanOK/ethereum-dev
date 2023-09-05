@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 
 	"gocode.ethan/ethereum-dev/getclient"
 	"gocode.ethan/ethereum-dev/listenevents"
@@ -14,8 +13,9 @@ var password = "goodboy"
 func main() {
 	client, err := getclient.GetEthClient()
 	if err != nil {
-		log.Fatal(err)
-		return
+
+		// log.Fatal(err)
+		// return
 	}
 	currentBlockNumber, _ := utils.GetNowBlockNumberAndBlockTime(client)
 	fmt.Println("current Block Number:", currentBlockNumber)

@@ -18,7 +18,7 @@ func GetEthClient() (*ethclient.Client, error) {
 	ALCHEMY_RPC_HTTP := os.Getenv("ALCHEMY_RPC_HTTP")
 	client, err := ethclient.Dial(ALCHEMY_RPC_HTTP)
 	if err != nil {
-		log.Fatal(err)
+		// log.Fatal(err)
 		return nil, err
 	}
 	return client, nil
