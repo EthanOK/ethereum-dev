@@ -85,7 +85,7 @@ func handledataERC20Print(logs []types.Log) {
 
 }
 
-func TransferLogsERC721(client *ethclient.Client, fromBlock string, toBlock string) uint64 {
+func TransferLogsERC721(client *ethclient.Client, chainId int, fromBlock string, toBlock string) uint64 {
 
 	transferEventTopic := common.HexToHash("0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef")
 	filterQuery := ethereum.FilterQuery{
@@ -103,7 +103,7 @@ func TransferLogsERC721(client *ethclient.Client, fromBlock string, toBlock stri
 
 	fromBlock_ := utils.StringToBig(fromBlock)
 	// handledataERC721Print(logs, fromBlock_.Uint64())
-	lastBlockNumber := handledataERC721(logs, fromBlock_.Uint64())
+	lastBlockNumber := handledataERC721(logs, fromBlock_.Uint64(), chainId)
 	return lastBlockNumber
 
 }
@@ -145,7 +145,7 @@ func handledataERC721Print(logs []types.Log, lastBlockNumber uint64) uint64 {
 	}
 
 }
-func handledataERC721(logs []types.Log, lastBlockNumber uint64) uint64 {
+func handledataERC721(logs []types.Log, lastBlockNumber uint64, chainId int) uint64 {
 
 	len_ := len(logs)
 	if len_ > 0 {
@@ -166,13 +166,13 @@ func handledataERC721(logs []types.Log, lastBlockNumber uint64) uint64 {
 
 				to := common.BigToAddress(topics[2].Big()).Hex()
 				if from != config.ZeroAddress && to != config.ZeroAddress {
-					fmt.Println("flter blockNumber:", log.BlockNumber, txHash)
+					fmt.Println("flter blockNumber:", log.BlockNumber, txHash, "chainId:", chainId)
 					lastBlockNumber = log.BlockNumber
 					// utils.StructToString(log)
 
 					tokenId := topics[3].Big().String()
-					insertSql := "INSERT IGNORE INTO event_transfer_erc721_bsc (token, tokenId,fromAddress, toAddress, blockNumber, transactionHash) VALUES(?, ?, ?, ?, ?, ?);"
-					utils.Insert(db, insertSql, token, tokenId, from, to, blockNumber, txHash)
+					insertSql := "INSERT IGNORE INTO event_transfer_erc721 (chainId,token, tokenId,fromAddress, toAddress, blockNumber, transactionHash) VALUES(?, ?, ?, ?, ?, ?, ?);"
+					utils.Insert(db, insertSql, chainId, token, tokenId, from, to, blockNumber, txHash)
 
 				}
 			}

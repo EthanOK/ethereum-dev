@@ -7,11 +7,11 @@ import (
 )
 
 func StartListenEvents() {
-	/* 	ethclient, err := getclient.GetEthClient()
-	   	if err != nil {
-	   		log.Fatal(err)
-	   		return
-	   	} */
+	ethclient, err := getclient.GetEthClient()
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
 	bscclient, err := getclient.GetBscClient()
 	if err != nil {
 		log.Fatal(err)
@@ -21,11 +21,20 @@ func StartListenEvents() {
 
 	go func() {
 		// ListenTransferERC20(client, "0xdac17f958d2ee523a2206206994597c13d831ec7")
-		// ListenTransferERC721_ETH(ethclient)
-		ListenTransferERC721_BSC(bscclient)
+		ListenTransferERC721_ETH(ethclient, 1)
+
 		done <- true
+
+	}()
+	go func() {
+		// ListenTransferERC20(client, "0xdac17f958d2ee523a2206206994597c13d831ec7")
+		// ListenTransferERC721_ETH(ethclient, 1)
+		ListenTransferERC721_ETH(bscclient, 56)
+		done <- true
+
 	}()
 
 	// 等待goroutines完成
+	<-done
 	<-done
 }
