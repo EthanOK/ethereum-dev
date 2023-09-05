@@ -26,15 +26,17 @@ func ListenTransferERC721_ETH(client *ethclient.Client, chainId int) {
 
 	time.Sleep(time.Duration(interval_time-int(interval)+1) * time.Second)
 
-	lastBlockNumber := currentBlockNumber
+	startBlockNumber := currentBlockNumber
 
 	go func() {
 
 		for {
 			// 在每次循环中执行操作
-			filters.TransferLogsERC721(client, chainId,
-				utils.Uint64ToString(lastBlockNumber), "")
-			lastBlockNumber++
+			fmt.Println("startBlockNumber:", startBlockNumber)
+			lastBlockNumber := filters.TransferLogsERC721(client, chainId,
+				utils.Uint64ToString(startBlockNumber), "")
+			fmt.Println("lastBlockNumber:", lastBlockNumber)
+			startBlockNumber = lastBlockNumber + 1
 			// 添加一些延迟
 			time.Sleep(time.Duration(interval_time) * time.Second)
 		}

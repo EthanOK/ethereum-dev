@@ -10,7 +10,7 @@ func StartListenEvents() {
 
 	done := make(chan bool)
 
-	/* 	go func() {
+	go func() {
 		ethclient, err := getclient.GetEthClient()
 		if err != nil {
 			log.Fatal(err)
@@ -21,7 +21,7 @@ func StartListenEvents() {
 
 		done <- true
 
-	}() */
+	}()
 
 	go func() {
 		bscclient, err := getclient.GetBscClient()
@@ -38,6 +38,6 @@ func StartListenEvents() {
 
 	// 等待goroutines完成
 	<-done
-	// <-done
+	<-done
 
 }

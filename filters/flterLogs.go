@@ -98,16 +98,16 @@ func TransferLogsERC721(client *ethclient.Client, chainId int, fromBlock string,
 	if err != nil {
 		fmt.Println("FilterLogs err:", err)
 		fromBlock_ := utils.StringToBig(fromBlock)
-		return fromBlock_.Uint64()
+		return fromBlock_.Uint64() - 1
 	}
 
 	fromBlock_ := utils.StringToBig(fromBlock)
 	// handledataERC721Print(logs, fromBlock_.Uint64())
-	lastBlockNumber := handledataERC721(logs, fromBlock_.Uint64(), chainId)
+	lastBlockNumber := handledataERC721Print(logs, fromBlock_.Uint64(), chainId)
 	return lastBlockNumber
 
 }
-func handledataERC721Print(logs []types.Log, lastBlockNumber uint64) uint64 {
+func handledataERC721Print(logs []types.Log, lastBlockNumber uint64, chainId int) uint64 {
 
 	len_ := len(logs)
 	if len_ > 0 {
@@ -123,7 +123,7 @@ func handledataERC721Print(logs []types.Log, lastBlockNumber uint64) uint64 {
 
 				to := common.BigToAddress(topics[2].Big()).Hex()
 				if from != config.ZeroAddress && to != config.ZeroAddress {
-					fmt.Println("flter blockNumber:", log.BlockNumber, txHash)
+					fmt.Println("flter blockNumber:", log.BlockNumber, txHash, chainId)
 					lastBlockNumber = log.BlockNumber
 					// utils.StructToString(log)
 
