@@ -102,8 +102,9 @@ func TransferLogsERC721(client *ethclient.Client, chainId int, fromBlock string,
 	}
 
 	fromBlock_ := utils.StringToBig(fromBlock)
+	// TODO: handledataERC721Print handledataERC721
 	// handledataERC721Print(logs, fromBlock_.Uint64())
-	lastBlockNumber := handledataERC721Print(logs, fromBlock_.Uint64(), chainId)
+	lastBlockNumber := handledataERC721(logs, fromBlock_.Uint64(), chainId)
 	return lastBlockNumber
 
 }

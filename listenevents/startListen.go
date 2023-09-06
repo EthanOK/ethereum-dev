@@ -17,7 +17,7 @@ func StartListenEvents() {
 			return
 		}
 		// ListenTransferERC20(client, "0xdac17f958d2ee523a2206206994597c13d831ec7")
-		ListenTransferERC721_ETH(ethclient, 1)
+		ListenTransferERC721(ethclient, 1)
 
 		done <- true
 
@@ -31,7 +31,7 @@ func StartListenEvents() {
 		}
 		// ListenTransferERC20(client, "0xdac17f958d2ee523a2206206994597c13d831ec7")
 		// ListenTransferERC721_ETH(ethclient, 1)
-		ListenTransferERC721_ETH(bscclient, 56)
+		ListenTransferERC721(bscclient, 56)
 		done <- true
 
 	}()

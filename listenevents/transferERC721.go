@@ -10,7 +10,7 @@ import (
 	"gocode.ethan/ethereum-dev/utils"
 )
 
-func ListenTransferERC721_ETH(client *ethclient.Client, chainId int) {
+func ListenTransferERC721(client *ethclient.Client, chainId int) {
 	var interval_time int
 	if chainId == 1 {
 		interval_time = config.ETHTIMEPER
