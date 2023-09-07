@@ -3,10 +3,12 @@ package utils
 import (
 	"crypto/ecdsa"
 	"log"
+	"os"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/joho/godotenv"
 )
 
 func GeneratePrivateKeyNoPrefix() string {
@@ -50,4 +52,19 @@ func PrivateKeyToAddress(privateKeyHex string) string {
 	address := crypto.PubkeyToAddress(*publicKeyECDSA)
 
 	return address.String()
+}
+
+func GetLocalPrivateKey() *ecdsa.PrivateKey {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	// 使用 os 包中的 Getenv 函数读取环境变量
+	PRIVATEKEY_TEST := os.Getenv("PRIVATEKEY_TEST")
+	privateKey, err := crypto.HexToECDSA(PRIVATEKEY_TEST)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return privateKey
 }
