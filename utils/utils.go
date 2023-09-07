@@ -20,12 +20,22 @@ func FormattedAddress(addressHex string) string {
 
 }
 
-// string to big
+// string to big int
 func StringToBig(str string) *big.Int {
 	if str == "" {
 		return nil
 	}
 	res, _ := new(big.Int).SetString(str, 10)
+	return res
+
+}
+
+// string to big.Float
+func StringToBigFloat(str string) *big.Float {
+	if str == "" {
+		return nil
+	}
+	res, _ := new(big.Float).SetString(str)
 	return res
 
 }
@@ -51,7 +61,30 @@ func StructToString(s interface{}) string {
 	}
 	// JSON数据转换为字符串
 	jsonString := string(jsonData_)
-	// 打印 JSON 字符串
-	fmt.Println(jsonString)
+
 	return jsonString
+}
+
+func ParseJsonToStruct(jsonStr string, structData interface{}) {
+
+	// 解析 JSON 字符串到 Struct
+	err := json.Unmarshal([]byte(jsonStr), &structData)
+	if err != nil {
+		fmt.Println("解析 JSON 失败:", err)
+
+	}
+
+}
+
+func ParseJson(jsonStr string) map[string]interface{} {
+	// 创建一个 map 来存储解析后的 JSON 数据
+	var data map[string]interface{}
+
+	// 解析 JSON 字符串到 map
+	err := json.Unmarshal([]byte(jsonStr), &data)
+	if err != nil {
+		fmt.Println("解析 JSON 失败:", err)
+		return nil
+	}
+	return data
 }

@@ -46,40 +46,6 @@ func main() {
 		isAddress := utils.CheckIsAddress(address)
 		fmt.Println(address, "is Address:", isAddress)
 
-		type Person struct {
-			Name  string `json:"name"`
-			Age   int    `json:"age"`
-			City  string `json:"city"`
-			Email string `json:"email"`
-		}
-		jsonData := "{\"name\":\"Alice\",\"age\":30,\"city\":\"NewYork\",\"email\":\"alice@example.com\"}"
-		//jsonData := `{"name":"Alice","age":30,"city":"NewYork","email":"alice@example.com"}`
-
-		// 解析 JSON 数据到结构体
-		var person Person
-		err_ := json.Unmarshal([]byte(jsonData), &person)
-		if err_ != nil {
-			fmt.Println("Error decoding JSON:", err)
-			return
-		}
-
-		// 访问解析后的数据
-		fmt.Println("Name:", person.Name)
-		fmt.Println("Age:", person.Age)
-		fmt.Println("City:", person.City)
-		fmt.Println("Email:", person.Email)
-		// 使用 json.Marshal 将结构体转换为 JSON 字符串
-		jsonData_, err := json.Marshal(person)
-		if err != nil {
-			fmt.Println("Error encoding JSON:", err)
-			return
-		}
-
-		// 将 JSON 数据转换为字符串
-		jsonString := string(jsonData_)
-
-		// 打印 JSON 字符串
-		fmt.Println(jsonString)
 	*/
 
 	// KeyStore
@@ -129,5 +95,6 @@ func main() {
 
 	   	select {} */
 
-	test.TestTransferETH()
+	// test.TestTransferETH()
+	test.TestJsonTOString()
 }
