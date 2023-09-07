@@ -129,5 +129,5 @@ func main() {
 
 	   	select {} */
 
-	test.TransferETH()
+	test.TestTransferETH()
 }

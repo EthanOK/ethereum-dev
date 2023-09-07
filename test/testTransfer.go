@@ -5,11 +5,10 @@ import (
 	"gocode.ethan/ethereum-dev/utils"
 )
 
-func TransferETH() {
+func TestTransferETH() {
 	client, _ := getclient.GetBscClient_T()
 	privateKey := utils.GetLocalPrivateKey()
-	toAddress := ""
-	amount := utils.StringToBig("1000000")
-
+	toAddress := "0x53188E798f2657576c9de8905478F46ac2f24b67"
+	amount := "1000000"
 	utils.TransferETH(client, privateKey, toAddress, amount)
 }

@@ -68,3 +68,10 @@ func GetLocalPrivateKey() *ecdsa.PrivateKey {
 	}
 	return privateKey
 }
+
+func GetAccount(privateKey *ecdsa.PrivateKey) string {
+	publicKey := privateKey.Public()
+	publicKeyECDSA, _ := publicKey.(*ecdsa.PublicKey)
+	address := crypto.PubkeyToAddress(*publicKeyECDSA)
+	return address.String()
+}

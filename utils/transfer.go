@@ -3,25 +3,39 @@ package utils
 import (
 	"context"
 	"crypto/ecdsa"
+	"fmt"
 	"log"
-	"math/big"
 
+	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
-	"gocode.ethan/ethereum-dev/utils"
 )
 
-func TransferETH(client *ethclient.Client, privateKey *ecdsa.PrivateKey, toAddress string, value *big.Int) {
+func TransferETH(client *ethclient.Client, privateKey *ecdsa.PrivateKey,
+	to string, amount string) {
+
+	account := GetAccount(privateKey)
 	//获取nonce
-	nonce := utils.GetAccountNonce(client, account)
+	nonce := GetAccountNonce(client, account)
+
+	toAddress := common.HexToAddress(to)
+
+	value := StringToBig(amount)
+
+	gasLimit := uint64(21000)
+
+	gasPrice, _ := client.SuggestGasPrice(context.Background())
+
 	tx := types.NewTransaction(nonce, toAddress, value, gasLimit, gasPrice, nil)
-	chainID, err := client.NetworkID(context.Background())
+
+	chainID, _ := client.NetworkID(context.Background())
+
+	signedTx, _ := types.SignTx(tx, types.NewEIP155Signer(chainID), privateKey)
+
+	err := client.SendTransaction(context.Background(), signedTx)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	signedTx, err := types.SignTx(tx, types.NewEIP155Signer(chainID), privateKey)
-	if err != nil {
-		log.Fatal(err)
-	}
+	fmt.Printf("tx Hash: %s", signedTx.Hash().Hex())
 }
