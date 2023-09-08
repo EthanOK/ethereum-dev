@@ -9,7 +9,7 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
-func GetNowBlockNumberAndBlockTime(client *ethclient.Client) (uint64, uint64) {
+func GetLatestBlockNumberAndBlockTime(client *ethclient.Client) (uint64, uint64) {
 	// Get the latest known block
 
 	block, err := client.BlockByNumber(context.Background(), nil)

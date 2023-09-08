@@ -14,19 +14,23 @@ const (
 )
 
 func TestGetInfoAccount() {
+	// Get Client
 	client, _ := getclient.GetEthClient()
 
 	// Get Account ETH Balance
 	balance := utils.GetETHBalance(client, ACCOUNT_Vitalik)
 	ethBalance := utils.WeiToEther(balance)
 	fmt.Println("Vitalik Account balance:", ethBalance, "ETH")
+
 	// Get Account ERC20 Balance
 	daiBalance, decimals := utils.GetERC20Balance(client, Token_DAI, ACCOUNT_Vitalik)
-
-	fmt.Println("Vitalik Account DAI balance:", utils.BigToDecimals(daiBalance, decimals), "DAI")
+	fmt.Println("Vitalik Account ERC20:DAI balance:", utils.BigToDecimals(daiBalance, decimals), "DAI")
 
 	// Get Account ERC721 Balance
 	balance_R, symbol := utils.GetERC721Balance(client, ERC721_Rarible, ACCOUNT_Vitalik)
-	fmt.Println("Vitalik Account Rarible balance:", balance_R, symbol)
+	fmt.Println("Vitalik Account ERC721:Rarible balance:", balance_R, symbol)
 
+	// Get Account Nonce
+	nonce := utils.GetAccountNonce(client, ACCOUNT_Vitalik)
+	fmt.Println("Vitalik Account Nonce:", nonce)
 }
