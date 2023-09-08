@@ -12,8 +12,6 @@ func main() {
 		privateKey := utils.GeneratePrivateKeyHasPrefix()
 		fmt.Println("privateKey:", privateKey)
 		address := utils.PrivateKeyToAddress(privateKey)
-		isAddress := utils.CheckIsAddress(address)
-		fmt.Println(address, "is Address:", isAddress)
 
 	*/
 
@@ -58,5 +56,8 @@ func main() {
 	// test.TestJsonTOString()
 	// test.TestAccessMysqlDB()
 	// test.TestGetInfoAccount()
-	test.TestGetInfoBlock()
+	// test.TestGetInfoBlock()
+	// test.TestAsyncFunc()
+	test.TestPrivateKey()
+
 }

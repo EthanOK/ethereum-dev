@@ -75,3 +75,21 @@ func GetAccount(privateKey *ecdsa.PrivateKey) string {
 	address := crypto.PubkeyToAddress(*publicKeyECDSA)
 	return address.String()
 }
+
+func GeneratePrivateKeyAndAccount() (string, string) {
+	privateKey, err := crypto.GenerateKey()
+	if err != nil {
+		log.Fatal(err)
+
+	}
+	privateKeyBytes := crypto.FromECDSA(privateKey)
+
+	// 无 0x前缀
+	privateKeyHex := common.Bytes2Hex(privateKeyBytes)
+
+	publicKey := privateKey.Public()
+	publicKeyECDSA, _ := publicKey.(*ecdsa.PublicKey)
+	account := crypto.PubkeyToAddress(*publicKeyECDSA).String()
+	return privateKeyHex, account
+
+}

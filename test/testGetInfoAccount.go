@@ -17,6 +17,10 @@ func TestGetInfoAccount() {
 	// Get Client
 	client, _ := getclient.GetEthClient()
 
+	// Check Is Address
+	isAddress := utils.CheckIsAddress(ACCOUNT_Vitalik)
+	fmt.Println(ACCOUNT_Vitalik, "is Address:", isAddress)
+
 	// Get Account ETH Balance
 	balance := utils.GetETHBalance(client, ACCOUNT_Vitalik)
 	ethBalance := utils.WeiToEther(balance)
