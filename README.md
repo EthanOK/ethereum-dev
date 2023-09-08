@@ -16,7 +16,11 @@ https://geth.ethereum.org/docs/tools/abigen
 
 `solc --abi erc20.sol -o build`
 
-`abigen --abi erc20.abi --pkg erc20 --type ERC20 --out erc20.go`
+`abigen --abi IERC20.abi --pkg erc20 --type ERC20 --out erc20.go`
+
+`solc --abi erc721.sol -o build`
+
+`abigen --abi IERC721.abi --pkg erc721 --type ERC721 --out erc721.go`
 
 ## Request
 

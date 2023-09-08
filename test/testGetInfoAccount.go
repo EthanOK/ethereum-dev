@@ -7,8 +7,11 @@ import (
 	"gocode.ethan/ethereum-dev/utils"
 )
 
-const ACCOUNT_Vitalik = "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
-const Token_DAI = "0x6B175474E89094C44Da98b954EedeAC495271d0F"
+const (
+	ACCOUNT_Vitalik = "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+	Token_DAI       = "0x6B175474E89094C44Da98b954EedeAC495271d0F"
+	ERC721_Rarible  = "0x60F80121C31A0d46B5279700f9DF786054aa5eE5"
+)
 
 func TestGetInfoAccount() {
 	client, _ := getclient.GetEthClient()
@@ -17,8 +20,13 @@ func TestGetInfoAccount() {
 	balance := utils.GetETHBalance(client, ACCOUNT_Vitalik)
 	ethBalance := utils.WeiToEther(balance)
 	fmt.Println("Vitalik Account balance:", ethBalance, "ETH")
-
+	// Get Account ERC20 Balance
 	daiBalance, decimals := utils.GetERC20Balance(client, Token_DAI, ACCOUNT_Vitalik)
 
 	fmt.Println("Vitalik Account DAI balance:", utils.BigToDecimals(daiBalance, decimals), "DAI")
+
+	// Get Account ERC721 Balance
+	balance_R, symbol := utils.GetERC721Balance(client, ERC721_Rarible, ACCOUNT_Vitalik)
+	fmt.Println("Vitalik Account Rarible balance:", balance_R, symbol)
+
 }
