@@ -18,7 +18,7 @@ func ListenTransferERC721(client *ethclient.Client, chainId int) {
 		interval_time = config.BSCTIMEPER
 	}
 
-	currentBlockNumber, blockTime := utils.GetNowBlockNumberAndBlockTime(client)
+	currentBlockNumber, blockTime := utils.GetLatestBlockNumberAndBlockTime(client)
 
 	interval := utils.GetSystemTimeStamp() - int64(blockTime)
 

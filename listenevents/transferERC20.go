@@ -10,7 +10,7 @@ import (
 )
 
 func ListenTransferERC20(client *ethclient.Client, tokenAddress string) {
-	currentBlockNumber, blockTime := utils.GetNowBlockNumberAndBlockTime(client)
+	currentBlockNumber, blockTime := utils.GetLatestBlockNumberAndBlockTime(client)
 
 	interval := utils.GetSystemTimeStamp() - int64(blockTime)
 
