@@ -1,26 +1,22 @@
 package main
 
 import (
-	"fmt"
-
-	"gocode.ethan/ethereum-dev/getclient"
 	"gocode.ethan/ethereum-dev/test"
-	"gocode.ethan/ethereum-dev/utils"
 )
 
 var password = "goodboy"
 
 func main() {
-	client, err := getclient.GetEthClient()
+	/* client, err := getclient.GetEthClient()
 	if err != nil {
-
+		log.Println(err)
 		// log.Fatal(err)
 		// return
 	}
 	currentBlockNumber, _ := utils.GetNowBlockNumberAndBlockTime(client)
 	fmt.Println("current Block Number:", currentBlockNumber)
 	nonce := utils.GetAccountNonce(client, "0x95B3Aad7f20E78a0e4DcEB9c23beca4e55ebdDF6")
-	fmt.Println("current Nonce:", nonce)
+	fmt.Println("current Nonce:", nonce) */
 	/*
 		   	account := "0x95B3Aad7f20E78a0e4DcEB9c23beca4e55ebdDF6"
 		   	// Get the balance of an account
@@ -87,5 +83,6 @@ func main() {
 
 	// test.TestTransferETH()
 	// test.TestJsonTOString()
-	test.TestAccessMysqlDB()
+	// test.TestAccessMysqlDB()
+	test.TestGetInfoAccount()
 }

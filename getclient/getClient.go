@@ -19,6 +19,7 @@ func GetEthClient() (*ethclient.Client, error) {
 	client, err := ethclient.Dial(ALCHEMY_RPC_HTTP)
 	if err != nil {
 		// log.Fatal(err)
+		log.Println("get ethclient failure")
 		return nil, err
 	}
 	return client, nil
@@ -34,6 +35,7 @@ func GetEthClient_G() (*ethclient.Client, error) {
 	client, err := ethclient.Dial(ALCHEMY_RPC_HTTP_G)
 	if err != nil {
 		// log.Fatal(err)
+		log.Println("get ethclient failure")
 		return nil, err
 	}
 	return client, nil
@@ -64,7 +66,8 @@ func GetBscClient_T() (*ethclient.Client, error) {
 	ANKR_RPC_HTTP_T := os.Getenv("ANKR_RPC_HTTP_T")
 	client, err := ethclient.Dial(ANKR_RPC_HTTP_T)
 	if err != nil {
-		log.Fatal(err)
+		// log.Fatal(err)
+		log.Println("get ethclient failure")
 		return nil, err
 	}
 	return client, nil

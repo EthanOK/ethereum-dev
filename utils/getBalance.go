@@ -10,6 +10,7 @@ import (
 	"gocode.ethan/ethereum-dev/token/erc20"
 )
 
+// Get ETH Balance
 func GetETHBalance(client *ethclient.Client, address string) *big.Int {
 
 	account := common.HexToAddress(address)
@@ -21,7 +22,7 @@ func GetETHBalance(client *ethclient.Client, address string) *big.Int {
 	return balance
 }
 
-func GetERC20Balance(client *ethclient.Client, contract string, account string) *big.Int {
+func GetERC20Balance(client *ethclient.Client, contract string, account string) (*big.Int, uint8) {
 
 	contractAddress := common.HexToAddress(contract)
 	accountAddress := common.HexToAddress(account)
@@ -36,7 +37,8 @@ func GetERC20Balance(client *ethclient.Client, contract string, account string) 
 	if err != nil {
 		log.Fatal(err)
 	}
-	return balance
+	decimals, _ := tokenInstance.Decimals(nil)
+	return balance, decimals
 }
 
 type TokenMetadata struct {
@@ -57,4 +59,15 @@ func GetERC20TokenMetadata(client *ethclient.Client, contract string) TokenMetad
 	decimals, _ := tokenInstance.Decimals(nil)
 	metadata := TokenMetadata{name, symbol, decimals}
 	return metadata
+}
+
+func GetERC20Decimals(client *ethclient.Client, contract string) uint8 {
+	contractAddress := common.HexToAddress(contract)
+	// tokenInstance, err := token.NewToken(tokenAddress, client)
+	tokenInstance, err := erc20.NewERC20(contractAddress, client)
+	if err != nil {
+		log.Fatal(err)
+	}
+	decimals, _ := tokenInstance.Decimals(nil)
+	return decimals
 }
