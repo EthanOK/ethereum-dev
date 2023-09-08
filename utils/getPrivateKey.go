@@ -2,8 +2,10 @@ package utils
 
 import (
 	"crypto/ecdsa"
+	"fmt"
 	"log"
 	"os"
+	"regexp"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
@@ -91,5 +93,22 @@ func GeneratePrivateKeyAndAccount() (string, string) {
 	publicKeyECDSA, _ := publicKey.(*ecdsa.PublicKey)
 	account := crypto.PubkeyToAddress(*publicKeyECDSA).String()
 	return privateKeyHex, account
+
+}
+
+// str = "^0x0000[0-9a-fA-F]{36}$"
+func GetPerfectAddress(str string) {
+	fmt.Println("GetPerfectAddress:")
+	re := regexp.MustCompile(str)
+	result := false
+
+	for !result {
+		privateKey, account := GeneratePrivateKeyAndAccount()
+		result = re.MatchString(account)
+		if result {
+			fmt.Println("privateKey:", privateKey)
+			fmt.Println("account:", account)
+		}
+	}
 
 }
