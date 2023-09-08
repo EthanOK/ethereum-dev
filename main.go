@@ -81,20 +81,11 @@ func main() {
 	   	// 等待goroutines完成
 	   	<-done */
 
-	/* db := utils.GetMysqlDB(
-	// 关闭整个程序之前执行db.Close()
-	defer db.Close()
-
-	utils.Query(db, "SELECT id, `key`, value FROM aggregator_ethan.`system`;")
-
-	utils.Insert(db, "INSERT INTO `system` (`key`, value) VALUES(?, ?);", "ens", "ether.eth")
-
-	utils.Query(db, "SELECT id, `key`, value FROM aggregator_ethan.`system`;") */
-
 	/* 	go listenevents.StartListenEvents()
 
 	   	select {} */
 
 	// test.TestTransferETH()
-	test.TestJsonTOString()
+	// test.TestJsonTOString()
+	test.TestAccessMysqlDB()
 }

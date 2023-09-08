@@ -7,7 +7,10 @@ import (
 )
 
 func TestJsonTOString() {
-
+	toStruct()
+	toMap()
+}
+func toStruct() {
 	type Person struct {
 		Name  string `json:"name"`
 		Age   int    `json:"age"`
@@ -30,11 +33,13 @@ func TestJsonTOString() {
 	// fmt.Println("Person:", person)
 
 	// 结构体 转 字符串
-	jsonString := utils.StructToString(person)
+	jsonString := utils.StructOrMapToJsonString(person)
 
 	// 打印 JSON 字符串
 	fmt.Println(jsonString)
+}
 
+func toMap() {
 	jsonData2_ := `{
 		"jsonrpc": "2.0",
 		"method": "eth_getLogs",
@@ -48,7 +53,8 @@ func TestJsonTOString() {
 		],
 		"id": 1
 	}`
-	mapData := utils.ParseJson(jsonData2_)
+	var mapData map[string]interface{}
+	utils.ParseJson(jsonData2_, &mapData)
 
 	// 处理map数据
 	// 获取 "params" 字段的值  转为切片
@@ -69,7 +75,7 @@ func TestJsonTOString() {
 	topic := topics[0]
 	fmt.Println("topics:", topic)
 
-	jsonString2 := utils.StructToString(mapData)
+	jsonString2 := utils.StructOrMapToJsonString(mapData)
 
 	// 打印 JSON 字符串
 	fmt.Println(jsonString2)

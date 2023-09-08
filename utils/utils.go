@@ -65,6 +65,19 @@ func StructToString(s interface{}) string {
 	return jsonString
 }
 
+func StructOrMapToJsonString(s interface{}) string {
+	// Struct Or Map转json数据
+	jsonData_, err := json.Marshal(s)
+	if err != nil {
+		fmt.Println("Error encoding JSON:", err)
+		return ""
+	}
+	// JSON数据转换为字符串
+	jsonString := string(jsonData_)
+
+	return jsonString
+}
+
 func ParseJsonToStruct(jsonStr string, structData interface{}) {
 
 	// 解析 JSON 字符串到 Struct
@@ -76,15 +89,15 @@ func ParseJsonToStruct(jsonStr string, structData interface{}) {
 
 }
 
-func ParseJson(jsonStr string) map[string]interface{} {
-	// 创建一个 map 来存储解析后的 JSON 数据
-	var data map[string]interface{}
+func ParseJson(jsonStr string, data *map[string]interface{}) {
+	// // 创建一个 map 来存储解析后的 JSON 数据
+	// var data map[string]interface{}
 
 	// 解析 JSON 字符串到 map
 	err := json.Unmarshal([]byte(jsonStr), &data)
 	if err != nil {
 		fmt.Println("解析 JSON 失败:", err)
-		return nil
+
 	}
-	return data
+
 }

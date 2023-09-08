@@ -80,7 +80,8 @@ func Query(db *sql.DB, sqlStatement string) {
 	}
 }
 
-func Insert(db *sql.DB, sqlStatement string, args ...interface{}) {
+// 返回自增长的Id
+func Insert(db *sql.DB, sqlStatement string, args ...interface{}) int64 {
 	// 准备插入语句
 	insertStmt, err := db.Prepare(sqlStatement)
 	if err != nil {
@@ -100,5 +101,22 @@ func Insert(db *sql.DB, sqlStatement string, args ...interface{}) {
 		log.Fatal(err)
 	}
 
-	fmt.Printf("最新插入的自增ID：%d\n", lastInsertID)
+	return lastInsertID
+}
+
+// 只插入不返回数据
+func InsertOnly(db *sql.DB, sqlStatement string, args ...interface{}) {
+	// 准备插入语句
+	insertStmt, err := db.Prepare(sqlStatement)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer insertStmt.Close()
+
+	// 插入数据
+	result, err := insertStmt.Exec(args...)
+	if err != nil {
+		log.Fatal(err)
+	}
+	result.RowsAffected()
 }
