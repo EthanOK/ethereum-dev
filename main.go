@@ -17,13 +17,6 @@ func main() {
 	utils.GetAccountsByKeyStoreInWalletsFile()
 	*/
 
-	// 0x9a1f783ea8e236c44859a179e597791b7c066e84 => 0x9a1F783EA8E236C44859a179E597791b7c066E84
-	// addressE := utils.FormattedAddress("0x9a1f783ea8e236c44859a179e597791b7c066e84")
-	// fmt.Println(addressE)
-
-	// isContract := utils.CheckAddressIsContract(client, "0xdac17f958d2ee523a2206206994597c13d831ec7")
-	// fmt.Println(isContract)
-
 	// filters.TransferLogsERC20(client, "0xdac17f958d2ee523a2206206994597c13d831ec7",
 	// 	utils.Uint64ToString(currentBlockNumber), "")
 
@@ -50,6 +43,7 @@ func main() {
 	// test.TestGetInfoAccount()
 	// test.TestGetInfoBlock()
 	// test.TestAsyncFunc()
-	test.TestPrivateKey()
+	// test.TestPrivateKey()
+	test.TestGetInfoAddress()
 
 }
