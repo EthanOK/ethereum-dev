@@ -4,19 +4,11 @@ import (
 	"gocode.ethan/ethereum-dev/test"
 )
 
-var password = "goodboy"
-
 func main() {
-
-	/*
-		privateKey := utils.GeneratePrivateKeyHasPrefix()
-		fmt.Println("privateKey:", privateKey)
-		address := utils.PrivateKeyToAddress(privateKey)
-
-	*/
 
 	// KeyStore
 	/* pathdir := "./temp"
+	var password = "goodboy"
 	utils.GetKeyStore(pathdir, password)
 
 	kspath := "./temp/UTC--2023-09-02T06-37-57.096776700Z--99e972b2c4689fba2aa8f31a6cebbdd12e3242c9"

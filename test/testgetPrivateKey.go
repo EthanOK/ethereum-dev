@@ -11,5 +11,5 @@ func TestPrivateKey() {
 	fmt.Println("privateKey:", privateKey)
 	fmt.Println("account:", account)
 
-	utils.GetPerfectAddress("^0x000000[0-9a-fA-F]{34}$")
+	utils.GetPerfectAddress("^0x0000[0-9a-fA-F]{36}$")
 }

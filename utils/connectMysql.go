@@ -6,11 +6,12 @@ import (
 	"log"
 
 	_ "github.com/go-sql-driver/mysql"
+	"gocode.ethan/ethereum-dev/config"
 )
 
 func GetMysqlDB() *sql.DB {
 	// 数据库连接信息
-	db, err := sql.Open("mysql", "root:root@tcp(192.168.0.173:3306)/aggregator_ethan")
+	db, err := sql.Open("mysql", config.DataSourceName)
 
 	// 检查是否连接成功
 	if err != nil {
