@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"math/big"
+	"os"
+	"path/filepath"
 
 	"github.com/ethereum/go-ethereum/common"
 )
@@ -100,4 +102,39 @@ func ParseJson(jsonStr string, data *map[string]interface{}) {
 
 	}
 
+}
+
+func GetLastFile(pathdir string) string {
+	// 确保pathdir是一个有效的路径
+	if _, err := os.Stat(pathdir); err != nil {
+		fmt.Println("Invalid path:", pathdir)
+		return ""
+	}
+
+	// 使用filepath.Walk()函数遍历pathdir目录并获取文件名
+	var lastFile string
+	var maxDepth int
+	filepath.Walk(pathdir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			fmt.Println("Error walking directory:", pathdir)
+			return nil
+		}
+
+		if info.IsDir() {
+			if maxDepth == 0 {
+				maxDepth = 1
+			} else {
+				return filepath.SkipDir
+			}
+		} else {
+			if maxDepth == 1 {
+				lastFile = path
+			}
+		}
+
+		return nil
+	})
+
+	// 返回最后一个文件的名称
+	return lastFile
 }

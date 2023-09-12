@@ -16,7 +16,7 @@ func GetKeyStore(pathdir string, password string) {
 		log.Fatalln(err)
 	}
 
-	fmt.Println(account.Address.Hex())
+	fmt.Println("NewKeyStore account:", account.Address.Hex())
 }
 
 func ImportKeyStore(keystoreFilePath string, password string) {

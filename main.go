@@ -44,6 +44,7 @@ func main() {
 	// test.TestGetInfoBlock()
 	// test.TestAsyncFunc()
 	// test.TestPrivateKey()
-	test.TestGetInfoAddress()
+	// test.TestGetInfoAddress()
+	test.TestKeyStore()
 
 }
