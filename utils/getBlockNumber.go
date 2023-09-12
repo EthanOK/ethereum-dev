@@ -3,6 +3,7 @@ package utils
 import (
 	"context"
 	"log"
+	"math/big"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
@@ -20,6 +21,16 @@ func GetLatestBlockNumberAndBlockTime(client *ethclient.Client) (uint64, uint64)
 	blockNumber := block.NumberU64()
 	blockTime := block.Time()
 	return blockNumber, blockTime
+
+}
+func GetLatestBlockNumber(client *ethclient.Client) *big.Int {
+	// Get the latest known block
+
+	block, _ := client.BlockByNumber(context.Background(), nil)
+
+	blockNumber := block.Number()
+
+	return blockNumber
 
 }
 

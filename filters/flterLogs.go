@@ -66,7 +66,7 @@ func handledataERC20Print(logs []types.Log) {
 			utils.StructToString(log)
 			// token := log.Address.Hex()
 			txHash := log.TxHash.Hex()
-			// blockNumber := utils.Uint64ToString(log.BlockNumber)
+			blockNumber := utils.Uint64ToString(log.BlockNumber)
 			topics := log.Topics
 			from := common.BigToAddress(topics[1].Big()).Hex()
 
@@ -77,6 +77,7 @@ func handledataERC20Print(logs []types.Log) {
 			fmt.Println("txHash:", txHash)
 			fmt.Println(from, "=>", to)
 			fmt.Println("amount:", value)
+			fmt.Println("blockNumber:", blockNumber)
 			fmt.Println("```````")
 
 		}

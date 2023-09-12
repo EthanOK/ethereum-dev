@@ -6,20 +6,6 @@ import (
 
 func main() {
 
-	// KeyStore
-	/* pathdir := "./temp"
-	var password = "goodboy"
-	utils.GetKeyStore(pathdir, password)
-
-	kspath := "./temp/UTC--2023-09-02T06-37-57.096776700Z--99e972b2c4689fba2aa8f31a6cebbdd12e3242c9"
-	utils.ImportKeyStore(kspath, password)
-
-	utils.GetAccountsByKeyStoreInWalletsFile()
-	*/
-
-	// filters.TransferLogsERC20(client, "0xdac17f958d2ee523a2206206994597c13d831ec7",
-	// 	utils.Uint64ToString(currentBlockNumber), "")
-
 	/* 	go async.AsyncF()
 
 	   	// 使用通道来等待goroutines完成
@@ -45,6 +31,7 @@ func main() {
 	// test.TestAsyncFunc()
 	// test.TestPrivateKey()
 	// test.TestGetInfoAddress()
-	test.TestKeyStore()
+	// test.TestKeyStore()
+	test.TestFilterTransferLogs()
 
 }
