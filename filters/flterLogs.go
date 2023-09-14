@@ -17,12 +17,14 @@ func TransferLogsERC20(client *ethclient.Client, tokenAddress string, fromBlock 
 
 	contractAddress := common.HexToAddress(tokenAddress)
 	transferEventTopic := common.HexToHash("0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef")
-	filterQuery := ethereum.FilterQuery{Addresses: []common.Address{contractAddress},
+	filterQuery := ethereum.FilterQuery{
+		Addresses: []common.Address{contractAddress},
 		FromBlock: utils.StringToBig(fromBlock),
 		ToBlock:   utils.StringToBig(toBlock),
 		Topics: [][]common.Hash{
 			{transferEventTopic},
 		}}
+
 	logs, err := client.FilterLogs(context.Background(), filterQuery)
 	if err != nil {
 		log.Fatal(err)
@@ -105,7 +107,7 @@ func TransferLogsERC721(client *ethclient.Client, chainId int, fromBlock string,
 	fromBlock_ := utils.StringToBig(fromBlock)
 	// TODO: handledataERC721Print handledataERC721
 	// handledataERC721Print(logs, fromBlock_.Uint64())
-	lastBlockNumber := handledataERC721(logs, fromBlock_.Uint64(), chainId)
+	lastBlockNumber := handledataERC721Print(logs, fromBlock_.Uint64(), chainId)
 	return lastBlockNumber
 
 }
