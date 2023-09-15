@@ -16,5 +16,6 @@ func main() {
 	// test.TestFilterTransferLogs()
 	// test.TestListenTransfer()
 	// test.TestTransferERC20()
-	test.TestListenNewBlock()
+	// test.TestListenNewBlock()
+	test.TestGetTransactionReceipt()
 }

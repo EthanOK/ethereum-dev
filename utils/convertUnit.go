@@ -7,15 +7,15 @@ import (
 	"github.com/shopspring/decimal"
 )
 
-// Wei To Ether 1e-06
-/* func WeiToEther(weiBalance *big.Int) *big.Float {
+// Wei To Ether
+func WeiToEther0(weiBalance *big.Int) *big.Float {
 	fbalance := new(big.Float)
 	fbalance.SetString(weiBalance.String())
 	ethValue := new(big.Float).Quo(fbalance, big.NewFloat(math.Pow10(18)))
 	return ethValue
 }
-*/
-// Wei To Ether
+
+// Wei To Ether 可能最后几位会四舍五入
 func WeiToEther(stringOrBigint interface{}) string {
 	_decimal := ToDecimal(stringOrBigint, 18)
 	return _decimal.String()
