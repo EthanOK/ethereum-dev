@@ -12,6 +12,8 @@ func TestListenTransfer() {
 }
 
 func TestListenNewBlock() {
+	// WSS
 	client, _ := getclient.GetEthClientWSS_G()
 	listenevents.ListenNewBlock(client)
+
 }

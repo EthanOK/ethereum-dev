@@ -21,6 +21,12 @@ func WeiToEther(stringOrBigint interface{}) string {
 	return _decimal.String()
 }
 
+// Wei To GWei
+func WeiToGWei(stringOrBigint interface{}) string {
+	_decimal := ToDecimal(stringOrBigint, 9)
+	return _decimal.String()
+}
+
 // Big To Decimal
 func BigToDecimals(weiBalance *big.Int, decimals uint8) *big.Float {
 	fbalance := new(big.Float)

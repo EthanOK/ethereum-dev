@@ -138,3 +138,7 @@ func GetLastFile(pathdir string) string {
 	// 返回最后一个文件的名称
 	return lastFile
 }
+
+func Bytes2HexHas0xPrefix(d []byte) string {
+	return "0x" + common.Bytes2Hex(d)
+}
