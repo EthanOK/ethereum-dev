@@ -2,7 +2,6 @@ package utils
 
 import (
 	"crypto/ecdsa"
-	"fmt"
 	"log"
 
 	"github.com/ethereum/go-ethereum/common/hexutil"
@@ -13,7 +12,7 @@ import (
 func Eth_Sign(privateKey *ecdsa.PrivateKey, data []byte) string {
 
 	hash := crypto.Keccak256Hash(data)
-	fmt.Println(hash.Hex())
+
 	signature, err := crypto.Sign(hash.Bytes(), privateKey)
 	if err != nil {
 		log.Fatal(err)

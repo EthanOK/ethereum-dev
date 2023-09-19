@@ -7,10 +7,10 @@ import (
 )
 
 func TestSignVerify() {
-	eth_Sign()
+	eth_sign()
 }
 
-func eth_Sign() {
+func eth_sign() {
 	privateKey := utils.GetLocalPrivateKey()
 
 	signAddress := utils.GetAccount(privateKey)
@@ -24,4 +24,7 @@ func eth_Sign() {
 	recoverAddress := utils.Recover_Eth_Sign(data, signatureHex)
 
 	fmt.Println(signAddress, recoverAddress)
+
+	fmt.Println("Verify Result:", signAddress == recoverAddress)
 }
+func person_sign() {}
