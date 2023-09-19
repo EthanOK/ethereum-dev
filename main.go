@@ -1,7 +1,7 @@
 package main
 
 import (
-	"gocode.ethan/ethereum-dev/utils"
+	"gocode.ethan/ethereum-dev/test"
 )
 
 func main() {
@@ -20,5 +20,5 @@ func main() {
 	// test.TestTransferERC20()
 	// test.TestListenNewBlock()
 	// test.TestGetTransactionReceipt()
-	utils.GenerateSignature()
+	test.TestSignVerify()
 }
