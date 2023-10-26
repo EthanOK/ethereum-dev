@@ -81,6 +81,7 @@ func Recover_PersonalSignText(message string, signatureHex string) string {
 
 }
 
+// 恢复签名，返回恢复地址
 func Recover_PersonalSign(data interface{}, signatureHex string) string {
 	signature := hexutil.MustDecode(signatureHex)
 

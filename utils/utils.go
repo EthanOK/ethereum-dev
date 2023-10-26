@@ -13,6 +13,7 @@ import (
 func has0xPrefix(str string) bool {
 	return len(str) >= 2 && str[0] == '0' && (str[1] == 'x' || str[1] == 'X')
 }
+
 func FormattedAddress(addressHex string) string {
 
 	address := common.HexToAddress(addressHex)
@@ -29,6 +30,13 @@ func StringToBig(str string) *big.Int {
 	}
 	res, _ := new(big.Int).SetString(str, 10)
 	return res
+
+}
+
+// big int to string
+func BigToString(amount *big.Int) string {
+
+	return amount.String()
 
 }
 
