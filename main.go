@@ -18,6 +18,8 @@ func main() {
 	// test.TestTransferERC20()
 	// test.TestListenNewBlock()
 	// test.TestGetTransactionReceipt()
-	test.TestSignVerify()
+	// test.TestSignVerify()
 	// async.AsyncF()
+
+	test.TestCallContact()
 }
