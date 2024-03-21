@@ -8,7 +8,7 @@ import (
 
 func HandleERC20TransferEvent(log types.Log) {
 	// 处理ERC20转账事件
-	fmt.Println("ERC20 Transfer Event:", log.Address)
+	// fmt.Println("ERC20 Transfer Event:", log.Address)
 
 }
 
