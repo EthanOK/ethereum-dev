@@ -15,3 +15,8 @@ const (
 	ERC721_Rarible  = "0x60F80121C31A0d46B5279700f9DF786054aa5eE5"
 	YGIO_TBSC       = "0xb06DcE9ae21c3b9163cD933E40c9EE563366b783"
 )
+
+const (
+	Transfer_Topic0              = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+	ERC6551AccountCreated_Topic0 = "0x79f19b3655ee38b1ce526556b7731a20c8f218fbda4a3990b6cc4172fdf88722"
+)

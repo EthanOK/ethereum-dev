@@ -41,6 +41,23 @@ func GetEthClient_G() (*ethclient.Client, error) {
 	}
 	return client, nil
 }
+func GetEthClient_S() (*ethclient.Client, error) {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	// 使用 os 包中的 Getenv 函数读取环境变量
+	ALCHEMY_RPC_HTTP_S := os.Getenv("ALCHEMY_RPC_HTTP_S")
+	client, err := ethclient.Dial(ALCHEMY_RPC_HTTP_S)
+	if err != nil {
+		// log.Fatal(err)
+		log.Println("get ethclient failure")
+		return nil, err
+	}
+	return client, nil
+}
+
 func GetEthClientWSS_G() (*ethclient.Client, error) {
 	err := godotenv.Load()
 	if err != nil {

@@ -21,5 +21,6 @@ func main() {
 	// test.TestSignVerify()
 	// async.AsyncF()
 
-	test.TestCallContact()
+	// test.TestCallContact()
+	test.TestMulTopicsEvent()
 }
