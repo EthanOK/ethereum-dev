@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"math/big"
 
 	"github.com/ethereum/go-ethereum/accounts/abi"
@@ -54,5 +55,10 @@ func HandleERC6551AccountCreatedEvent(log types.Log, timestamp uint64) {
 		TokenBoundAccount:       tokenBoundAccount,
 		Salt:                    salt,
 		ChainId:                 chainId}
-	utils.GormDB_ERC6551.Create(&accountCreated)
+
+	error_ := utils.GormDB_ERC6551.Create(&accountCreated).Error
+
+	if error_ != nil {
+		fmt.Println("插入数据重复")
+	}
 }

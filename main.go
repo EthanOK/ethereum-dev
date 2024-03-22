@@ -10,9 +10,9 @@ import (
 var wg sync.WaitGroup
 
 func main() {
+	wg.Add(1)
 
 	utils.InitDB()
-	wg.Add(1)
 
 	// test.TestTransferETH()
 	// test.TestJsonTOString()
@@ -32,6 +32,7 @@ func main() {
 	// async.AsyncF()
 
 	// test.TestCallContact()
+
 	go func() {
 		defer wg.Done()
 		test.TestMulTopicsEvent()

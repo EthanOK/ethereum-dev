@@ -8,7 +8,7 @@ type ERC6551AccountCreated struct {
 	gorm.Model
 	TokenContract           string
 	TokenId                 string
-	TokenBoundAccount       string
+	TokenBoundAccount       string `gorm:"type:varchar(100);uniqueIndex"`
 	Implementation          string
 	ERC6551RegistryContract string
 	TxHash                  string
