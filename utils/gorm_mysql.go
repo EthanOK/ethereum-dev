@@ -24,6 +24,7 @@ func GetGormDB_EthereumDev() *gorm.DB {
 	// Migrate the schema
 	db.AutoMigrate(&models.ERC6551AccountCreated{})
 	db.AutoMigrate(&models.ERC20Transfer{})
+	db.AutoMigrate(&models.ERC721Transfer{})
 	db.AutoMigrate(&models.Config{})
 
 	return db

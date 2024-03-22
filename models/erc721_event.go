@@ -2,17 +2,17 @@ package models
 
 import "gorm.io/gorm"
 
-type ERC20Transfer struct {
+type ERC721Transfer struct {
 	gorm.Model
 	Token       string
 	From        string
 	To          string
-	Value       string
+	TokenId     string
 	TxHash      string
 	Timestamp   uint64
 	BlockNumber uint64
 }
 
-func (msg *ERC20Transfer) TableName() string {
-	return "erc20_transfer"
+func (msg *ERC721Transfer) TableName() string {
+	return "erc721_transfer"
 }

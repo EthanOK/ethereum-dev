@@ -16,7 +16,8 @@ func HandleERC20TransferEvent(log types.Log, timestamp uint64) {
 
 func HandleERC721TransferEvent(log types.Log, timestamp uint64) {
 	// 处理ERC721转账事件
-	fmt.Println("ERC721 Transfer Event:", log.Address)
+	// fmt.Println("ERC721 Transfer Event:", log.Address)
+	controllers.HandleERC721TransferEvent(log, timestamp)
 
 }
 

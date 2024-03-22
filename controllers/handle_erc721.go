@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"fmt"
-	"math/big"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
@@ -10,24 +9,24 @@ import (
 	"gocode.ethan/ethereum-dev/utils"
 )
 
-func HandleERC20TransferEvent(log types.Log, timestamp uint64) {
-	// 处理ERC20转账事件
+func HandleERC721TransferEvent(log types.Log, timestamp uint64) {
+	// 处理ERC721转账事件
 
 	from := common.BytesToAddress(log.Topics[1].Bytes()).Hex()
 	to := common.BytesToAddress(log.Topics[2].Bytes()).Hex()
-	value := new(big.Int).SetBytes(log.Data).String()
+	tokenId := log.Topics[3].Big().String()
 
-	erc20Transfer := models.ERC20Transfer{
+	erc721Transfer := models.ERC721Transfer{
 		Token:       log.Address.Hex(),
 		From:        from,
 		To:          to,
-		Value:       value,
+		TokenId:     tokenId,
 		Timestamp:   timestamp,
 		BlockNumber: log.BlockNumber,
 		TxHash:      log.TxHash.Hex(),
 	}
 
-	err := utils.GormDB_EthereumDev.Create(&erc20Transfer).Error
+	err := utils.GormDB_EthereumDev.Create(&erc721Transfer).Error
 	if err != nil {
 		fmt.Println("Error inserting ERC20Transfer:", err)
 	}
