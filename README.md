@@ -22,6 +22,15 @@ https://geth.ethereum.org/docs/tools/abigen
 
 `abigen --abi IERC721.abi --pkg erc721 --type ERC721 --out erc721.go`
 
+### MAC System
+
+```
+solcjs --abi IERC6551Registry.sol -o build
+
+abigen --abi IERC6551Registry.abi --pkg erc6551 --type ERC6551Registry --out erc6551Registry.go
+
+```
+
 ## Request
 
 ### Post(json)
@@ -32,6 +41,31 @@ https://geth.ethereum.org/docs/tools/abigen
 
 ### Get
 
-# config
-
 go version: 1.20.7
+
+# ethereum-dev doc
+
+## utils
+
+## filters
+
+### mul topics filter
+
+```go
+// filters/mulTopicsEvent.go
+
+	filterQuery := ethereum.FilterQuery{
+		BlockHash: (*common.Hash)(&blockHash),
+		Topics: [][]common.Hash{
+			topic0s[:], // 多个 topic0，无需每个 topic0 调用一次
+		},
+	}
+    // Topics: [][]common.Hash
+    // Examples:
+	// {} or nil          matches any topic list
+	// {{A}}              matches topic A in first position
+	// {{}, {B}}          matches any topic in first position AND B in second position
+	// {{A}, {B}}         matches topic A in first position AND B in second position
+	// {{A, B}, {C, D}}   matches topic (A OR B) in first position AND (C OR D) in second position
+
+```

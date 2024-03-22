@@ -16,7 +16,7 @@ func MulTopicsEvent(client *ethclient.Client, blockHash common.Hash, timestamp u
 	filterQuery := ethereum.FilterQuery{
 		BlockHash: (*common.Hash)(&blockHash),
 		Topics: [][]common.Hash{
-			topic0s[:],
+			topic0s[:], // 多个 topic0，无需每个 topic0 调用一次
 		},
 	}
 
@@ -43,7 +43,10 @@ func HandleLogs(logs []types.Log, timestamp uint64) {
 			}
 
 		case common.HexToHash(config.ERC6551AccountCreated_Topic0):
-			HandleERC6551AccountCreatedEvent(log, timestamp)
+
+			if len(log.Topics) == 4 {
+				HandleERC6551AccountCreatedEvent(log, timestamp)
+			}
 
 		default:
 			// 处理其他事件

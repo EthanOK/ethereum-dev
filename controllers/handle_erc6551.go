@@ -3,40 +3,48 @@ package controllers
 import (
 	"fmt"
 	"math/big"
+	"strings"
 
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	"gocode.ethan/ethereum-dev/models"
+	"gocode.ethan/ethereum-dev/token/erc6551"
 	"gocode.ethan/ethereum-dev/utils"
 )
 
 func HandleERC6551AccountCreatedEvent(log types.Log, timestamp uint64) {
 
-	// 解析事件参数
+	// 解析 Event 参数
 	contract := log.Address.Hex()
 	blockNumber := log.BlockNumber
 	txHash := log.TxHash.Hex()
 
+	// 解析 Topics 参数
 	impl := common.BytesToAddress(log.Topics[1].Bytes()).Hex()
 	tokenContract := common.BytesToAddress(log.Topics[2].Bytes()).Hex()
 	tokenId := log.Topics[3].Big().String()
 
-	address_, _ := abi.NewType("address", "", nil)
-	bytes32_, _ := abi.NewType("bytes32", "", nil)
-	uint256_, _ := abi.NewType("uint256", "", nil)
+	// TODO：方式一 解析 log.Data 参数
+	// address_, _ := abi.NewType("address", "", nil)
+	// bytes32_, _ := abi.NewType("bytes32", "", nil)
+	// uint256_, _ := abi.NewType("uint256", "", nil)
 
-	arguments := abi.Arguments{
-		{Type: address_},
-		{Type: bytes32_},
-		{Type: uint256_},
-	}
-	data := log.Data
-	parsed, err := arguments.UnpackValues(data)
-	if err != nil {
-		panic(err)
+	// arguments := abi.Arguments{
+	// 	{Type: address_},
+	// 	{Type: bytes32_},
+	// 	{Type: uint256_},
+	// }
 
-	}
+	// parsed, err := arguments.UnpackValues(log.Data)
+	// if err != nil {
+	// 	panic(err)
+	// }
+
+	// TODO：方式二 解析 log.Data 参数
+	erc6551RegistryAbi, _ := abi.JSON(strings.NewReader(erc6551.ERC6551RegistryABI))
+
+	parsed, _ := erc6551RegistryAbi.Unpack("ERC6551AccountCreated", log.Data)
 
 	tokenBoundAccount := parsed[0].(common.Address).Hex()
 	salt_ := parsed[1].([32]byte)
