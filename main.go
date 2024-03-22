@@ -14,6 +14,8 @@ func main() {
 
 	utils.InitDB()
 
+	// controllers.CreateConfig(config.F_StartBlockNumber, "5534762")
+
 	// test.TestTransferETH()
 	// test.TestJsonTOString()
 	// test.TestAccessMysqlDB()

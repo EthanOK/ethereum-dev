@@ -5,21 +5,19 @@ import (
 	"fmt"
 	"log"
 	"math/big"
-	"sync"
 	"time"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"gocode.ethan/ethereum-dev/config"
+	"gocode.ethan/ethereum-dev/controllers"
 	"gocode.ethan/ethereum-dev/filters"
 	"gocode.ethan/ethereum-dev/getclient"
+	"gocode.ethan/ethereum-dev/utils"
 )
-
-var wg sync.WaitGroup
 
 func TestMulTopicsEvent() {
 	// 测试多主题事件
-	wg.Add(1)
 
 	client, err := getclient.GetEthClient_S()
 	if err != nil {
@@ -27,14 +25,12 @@ func TestMulTopicsEvent() {
 		log.Fatal(err)
 
 	}
+	startBlockNumber := controllers.GetConfigValue(config.F_StartBlockNumber)
 
-	go startListenEvent(client, big.NewInt(5534762))
-
-	wg.Wait()
+	startListenEvent(client, utils.StringToBig(startBlockNumber))
 
 }
 func startListenEvent(client *ethclient.Client, startBlockNumber *big.Int) {
-	defer wg.Done()
 
 	for {
 
@@ -52,8 +48,11 @@ func startListenEvent(client *ethclient.Client, startBlockNumber *big.Int) {
 
 			filters.MulTopicsEvent(client, block.Hash(), block.Time(), topic0s)
 			fmt.Println("此区块已完成: ", startBlockNumber)
-			// 获取下一个区块
+
+			// 保存下一个区块至数据库
 			startBlockNumber.Add(startBlockNumber, big.NewInt(1))
+			controllers.UpdataConfig(config.F_StartBlockNumber, startBlockNumber.String())
+
 		}
 
 		time.Sleep(6 * time.Second)

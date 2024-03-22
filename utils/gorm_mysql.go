@@ -7,21 +7,24 @@ import (
 	"gorm.io/gorm"
 )
 
-var GormDB_ERC6551 *gorm.DB
+var GormDB_EthereumDev *gorm.DB
 
 func InitDB() {
-	GormDB_ERC6551 = GetGormDB_ERC6551()
+	GormDB_EthereumDev = GetGormDB_EthereumDev()
 
 }
 
-func GetGormDB_ERC6551() *gorm.DB {
+func GetGormDB_EthereumDev() *gorm.DB {
 
-	db, err := gorm.Open(mysql.Open(config.DataSourceName_ERC6551), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open(config.DB_Name_Ethereum_Dev), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
+
 	// Migrate the schema
 	db.AutoMigrate(&models.ERC6551AccountCreated{})
+	db.AutoMigrate(&models.ERC20Transfer{})
+	db.AutoMigrate(&models.Config{})
 
 	return db
 

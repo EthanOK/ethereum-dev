@@ -15,11 +15,6 @@ import (
 
 func HandleERC6551AccountCreatedEvent(log types.Log, timestamp uint64) {
 
-	// 解析 Event 参数
-	contract := log.Address.Hex()
-	blockNumber := log.BlockNumber
-	txHash := log.TxHash.Hex()
-
 	// 解析 Topics 参数
 	impl := common.BytesToAddress(log.Topics[1].Bytes()).Hex()
 	tokenContract := common.BytesToAddress(log.Topics[2].Bytes()).Hex()
@@ -53,10 +48,10 @@ func HandleERC6551AccountCreatedEvent(log types.Log, timestamp uint64) {
 	chainId := parsed[2].(*big.Int).Uint64()
 
 	accountCreated := models.ERC6551AccountCreated{
-		ERC6551RegistryContract: contract,
+		ERC6551RegistryContract: log.Address.Hex(),
 		Timestamp:               timestamp,
-		BlockNumber:             blockNumber,
-		TxHash:                  txHash,
+		BlockNumber:             log.BlockNumber,
+		TxHash:                  log.TxHash.Hex(),
 		Implementation:          impl,
 		TokenContract:           tokenContract,
 		TokenId:                 tokenId,
@@ -64,7 +59,7 @@ func HandleERC6551AccountCreatedEvent(log types.Log, timestamp uint64) {
 		Salt:                    salt,
 		ChainId:                 chainId}
 
-	error_ := utils.GormDB_ERC6551.Create(&accountCreated).Error
+	error_ := utils.GormDB_EthereumDev.Create(&accountCreated).Error
 
 	if error_ != nil {
 		fmt.Println("插入数据重复")

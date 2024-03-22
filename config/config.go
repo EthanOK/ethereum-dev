@@ -8,7 +8,7 @@ const ZeroAddress = "0x0000000000000000000000000000000000000000"
 
 const DataSourceName = "root:root@tcp(192.168.0.173:3306)/aggregator_ethan"
 
-const DataSourceName_ERC6551 = "root:root@tcp(127.0.0.1:3306)/erc6551?charset=utf8mb4&parseTime=True&loc=Local"
+const DB_Name_Ethereum_Dev = "root:root@tcp(127.0.0.1:3306)/ethereum-dev?charset=utf8mb4&parseTime=True&loc=Local"
 
 const (
 	USDT            = "0xdac17f958d2ee523a2206206994597c13d831ec7"
@@ -21,4 +21,8 @@ const (
 const (
 	Transfer_Topic0              = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
 	ERC6551AccountCreated_Topic0 = "0x79f19b3655ee38b1ce526556b7731a20c8f218fbda4a3990b6cc4172fdf88722"
+)
+
+const (
+	F_StartBlockNumber = "filter_start_block_number"
 )

@@ -10,6 +10,7 @@ import (
 func HandleERC20TransferEvent(log types.Log, timestamp uint64) {
 	// 处理ERC20转账事件
 	// fmt.Println("ERC20 Transfer Event:", log.Address)
+	controllers.HandleERC20TransferEvent(log, timestamp)
 
 }
 
@@ -26,7 +27,7 @@ func HandleERC1155TransferEvent(log types.Log, timestamp uint64) {
 
 func HandleERC6551AccountCreatedEvent(log types.Log, timestamp uint64) {
 	// 处理ERC6551账户创建事件
-	fmt.Println("ERC6551 Account Created Event:", log.Address)
+	// fmt.Println("ERC6551 Account Created Event:", log.Address)
 	controllers.HandleERC6551AccountCreatedEvent(log, timestamp)
 
 }
