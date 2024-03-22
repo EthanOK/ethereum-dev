@@ -28,7 +28,7 @@ func TestMulTopicsEvent() {
 
 	}
 
-	go startListenEvent(client, big.NewInt(5531180))
+	go startListenEvent(client, big.NewInt(5534762))
 
 	wg.Wait()
 
@@ -46,9 +46,11 @@ func startListenEvent(client *ethclient.Client, startBlockNumber *big.Int) {
 		} else {
 			ERC6551AccountCreated_Topic0 := common.HexToHash(config.ERC6551AccountCreated_Topic0)
 			Transfer_Topic0 := common.HexToHash(config.Transfer_Topic0)
+
+			// TODO：将待查询的事件topic0写入topic0s
 			topic0s := []common.Hash{ERC6551AccountCreated_Topic0, Transfer_Topic0}
 
-			filters.MulTopicsEvent(client, block.Hash(), topic0s)
+			filters.MulTopicsEvent(client, block.Hash(), block.Time(), topic0s)
 			fmt.Println("此区块已完成: ", startBlockNumber)
 			// 获取下一个区块
 			startBlockNumber.Add(startBlockNumber, big.NewInt(1))

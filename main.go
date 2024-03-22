@@ -1,8 +1,18 @@
 package main
 
-import "gocode.ethan/ethereum-dev/test"
+import (
+	"sync"
+
+	"gocode.ethan/ethereum-dev/test"
+	"gocode.ethan/ethereum-dev/utils"
+)
+
+var wg sync.WaitGroup
 
 func main() {
+
+	utils.InitDB()
+	wg.Add(1)
 
 	// test.TestTransferETH()
 	// test.TestJsonTOString()
@@ -22,5 +32,11 @@ func main() {
 	// async.AsyncF()
 
 	// test.TestCallContact()
-	test.TestMulTopicsEvent()
+	go func() {
+		defer wg.Done()
+		test.TestMulTopicsEvent()
+
+	}()
+
+	wg.Wait()
 }

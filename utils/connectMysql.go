@@ -30,6 +30,28 @@ func GetMysqlDB() *sql.DB {
 	return db
 }
 
+func GetMysqlDBWithConfig(dbConfig string) *sql.DB {
+	// 数据库连接信息
+	db, err := sql.Open("mysql", dbConfig)
+
+	// 检查是否连接成功
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// 确保在程序退出时关闭数据库连接
+	// defer db.Close()
+
+	// 测试连接
+	err = db.Ping()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return db
+
+}
+
 func Query(db *sql.DB, sqlStatement string) {
 
 	// 执行查询操作

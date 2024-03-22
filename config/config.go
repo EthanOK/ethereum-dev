@@ -8,6 +8,8 @@ const ZeroAddress = "0x0000000000000000000000000000000000000000"
 
 const DataSourceName = "root:root@tcp(192.168.0.173:3306)/aggregator_ethan"
 
+const DataSourceName_ERC6551 = "root:root@tcp(127.0.0.1:3306)/erc6551?charset=utf8mb4&parseTime=True&loc=Local"
+
 const (
 	USDT            = "0xdac17f958d2ee523a2206206994597c13d831ec7"
 	ACCOUNT_Vitalik = "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"

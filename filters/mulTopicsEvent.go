@@ -11,7 +11,7 @@ import (
 	"gocode.ethan/ethereum-dev/config"
 )
 
-func MulTopicsEvent(client *ethclient.Client, blockHash common.Hash, topic0s []common.Hash) {
+func MulTopicsEvent(client *ethclient.Client, blockHash common.Hash, timestamp uint64, topic0s []common.Hash) {
 
 	filterQuery := ethereum.FilterQuery{
 		BlockHash: (*common.Hash)(&blockHash),
@@ -24,11 +24,11 @@ func MulTopicsEvent(client *ethclient.Client, blockHash common.Hash, topic0s []c
 	if err != nil {
 		log.Fatal(err)
 	}
-	HandleLogs(logs)
+	HandleLogs(logs, timestamp)
 
 }
 
-func HandleLogs(logs []types.Log) {
+func HandleLogs(logs []types.Log, timestamp uint64) {
 
 	for _, log := range logs {
 
@@ -37,13 +37,13 @@ func HandleLogs(logs []types.Log) {
 
 		case common.HexToHash(config.Transfer_Topic0):
 			if len(log.Topics) == 3 {
-				HandleERC20TransferEvent(log)
+				HandleERC20TransferEvent(log, timestamp)
 			} else if len(log.Topics) == 4 {
-				HandleERC721TransferEvent(log)
+				HandleERC721TransferEvent(log, timestamp)
 			}
 
 		case common.HexToHash(config.ERC6551AccountCreated_Topic0):
-			HandleERC6551AccountCreatedEvent(log)
+			HandleERC6551AccountCreatedEvent(log, timestamp)
 
 		default:
 			// 处理其他事件
