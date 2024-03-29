@@ -37,29 +37,26 @@ func startListenEvent(client *ethclient.Client, startBlockNumber *big.Int) {
 
 	for {
 
-		go func() {
-			block, err_ := client.BlockByNumber(context.Background(), startBlockNumber)
-			if err_ != nil {
+		block, err_ := client.BlockByNumber(context.Background(), startBlockNumber)
+		if err_ != nil {
 
-				fmt.Println("区块还没产生：", startBlockNumber)
+			fmt.Println("区块还没产生：", startBlockNumber)
 
-			} else {
-				ERC6551AccountCreated_Topic0 := common.HexToHash(config.ERC6551AccountCreated_Topic0)
-				Transfer_Topic0 := common.HexToHash(config.Transfer_Topic0)
+		} else {
+			ERC6551AccountCreated_Topic0 := common.HexToHash(config.ERC6551AccountCreated_Topic0)
+			Transfer_Topic0 := common.HexToHash(config.Transfer_Topic0)
 
-				// TODO：将待查询的事件topic0写入topic0s
-				topic0s := []common.Hash{ERC6551AccountCreated_Topic0, Transfer_Topic0}
+			// TODO：将待查询的事件topic0写入topic0s
+			topic0s := []common.Hash{ERC6551AccountCreated_Topic0, Transfer_Topic0}
 
-				filters.MulTopicsEvent(client, block.Hash(), block.Time(), topic0s)
-				fmt.Println("此区块已完成: ", startBlockNumber)
+			filters.MulTopicsEvent(client, block.Hash(), block.Time(), topic0s)
+			fmt.Println("此区块已完成: ", startBlockNumber)
 
-				// 保存下一个区块至数据库
-				startBlockNumber.Add(startBlockNumber, big.NewInt(1))
-				controllers.UpdataConfig(config.F_StartBlockNumber, startBlockNumber.String())
+			// 保存下一个区块至数据库
+			startBlockNumber.Add(startBlockNumber, big.NewInt(1))
+			controllers.UpdataConfig(config.F_StartBlockNumber, startBlockNumber.String())
 
-			}
-
-		}()
+		}
 
 		<-ticker.C
 
