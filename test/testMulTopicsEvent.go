@@ -32,6 +32,9 @@ func TestMulTopicsEvent() {
 }
 func startListenEvent(client *ethclient.Client, startBlockNumber *big.Int) {
 
+	// 定时任务 6s 执行一次
+	ticker := time.NewTicker(6 * time.Second)
+
 	for {
 
 		block, err_ := client.BlockByNumber(context.Background(), startBlockNumber)
@@ -55,7 +58,7 @@ func startListenEvent(client *ethclient.Client, startBlockNumber *big.Int) {
 
 		}
 
-		time.Sleep(6 * time.Second)
+		<-ticker.C
 
 	}
 
