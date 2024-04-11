@@ -156,6 +156,10 @@ func Bytes2Big(b []byte) *big.Int {
 	return new(big.Int).SetBytes(b)
 }
 
+func Bytes2Address(b []byte) common.Address {
+	return common.BytesToAddress(b)
+}
+
 func DynamicBytes2String(data []byte) string {
 
 	string_, _ := abi.NewType("string", "", nil)
