@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -149,4 +150,23 @@ func GetLastFile(pathdir string) string {
 
 func Bytes2HexHas0xPrefix(d []byte) string {
 	return "0x" + common.Bytes2Hex(d)
+}
+
+func Bytes2Big(b []byte) *big.Int {
+	return new(big.Int).SetBytes(b)
+}
+
+func DynamicBytes2String(data []byte) string {
+
+	string_, _ := abi.NewType("string", "", nil)
+
+	arguments := abi.Arguments{
+		{Type: string_},
+	}
+
+	parsed, err := arguments.UnpackValues(data)
+	if err != nil {
+		return ""
+	}
+	return parsed[0].(string)
 }

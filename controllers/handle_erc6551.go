@@ -8,8 +8,8 @@ import (
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
+	"gocode.ethan/ethereum-dev/contracts/erc6551"
 	"gocode.ethan/ethereum-dev/models"
-	"gocode.ethan/ethereum-dev/token/erc6551"
 	"gocode.ethan/ethereum-dev/utils"
 )
 

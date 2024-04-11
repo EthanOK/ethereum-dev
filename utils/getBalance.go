@@ -7,8 +7,8 @@ import (
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
-	"gocode.ethan/ethereum-dev/token/erc20"
-	"gocode.ethan/ethereum-dev/token/erc721"
+	"gocode.ethan/ethereum-dev/contracts/erc20"
+	"gocode.ethan/ethereum-dev/contracts/erc721"
 )
 
 // Get ETH Balance

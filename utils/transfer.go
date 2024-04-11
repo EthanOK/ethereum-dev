@@ -10,7 +10,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
-	"gocode.ethan/ethereum-dev/token/erc20"
+	"gocode.ethan/ethereum-dev/contracts/erc20"
 )
 
 func TransferETH(client *ethclient.Client, privateKey *ecdsa.PrivateKey,

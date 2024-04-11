@@ -35,6 +35,8 @@ func main() {
 
 	// test.TestCallContact()
 
+	test.TestMulticall3()
+
 	go func() {
 		defer wg.Done()
 		test.TestMulTopicsEvent()

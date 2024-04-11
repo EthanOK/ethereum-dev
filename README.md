@@ -29,6 +29,11 @@ solcjs --abi IERC6551Registry.sol -o build
 
 abigen --abi IERC6551Registry.abi --pkg erc6551 --type ERC6551Registry --out erc6551Registry.go
 
+<!-- ./solidity -->
+solcjs --abi Multicall3.sol -o build
+<!-- ./solidity/build -->
+abigen --abi Multicall3.abi --pkg multicall3 --type Multicall3 --out multicall3.go
+
 ```
 
 ## Request

@@ -1,5 +1,9 @@
 package config
 
+import (
+	"github.com/ethereum/go-ethereum/common"
+)
+
 const ETHTIMEPER = 12
 
 const BSCTIMEPER = 6
@@ -16,6 +20,7 @@ const (
 	Token_DAI       = "0x6B175474E89094C44Da98b954EedeAC495271d0F"
 	ERC721_Rarible  = "0x60F80121C31A0d46B5279700f9DF786054aa5eE5"
 	YGIO_TBSC       = "0xb06DcE9ae21c3b9163cD933E40c9EE563366b783"
+	Multicall3      = "0xcA11bde05977b3631167028862bE2a173976CA11"
 )
 
 const (
@@ -26,3 +31,5 @@ const (
 const (
 	F_StartBlockNumber = "filter_start_block_number"
 )
+
+var Multicall3Address = common.HexToAddress(Multicall3)
