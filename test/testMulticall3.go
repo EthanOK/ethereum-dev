@@ -37,4 +37,19 @@ func TestMulticall3() {
 	fmt.Println("totalSupply:", totalSupply)
 	fmt.Println("symbol:", symbol)
 
+	var params3 []utils.AggregateCall3
+	params3 = append(params3, utils.AggregateCall3{
+		Target:       common.HexToAddress("0x779877A7B0D9E8603169DdbD7836e478b4624789"),
+		AllowFailure: false,
+		CallData:     common.FromHex("0x18160ddd")})
+	params3 = append(params3, utils.AggregateCall3{
+		Target:       common.HexToAddress("0x709B78B36b7208f668A3823c1d1992C0805E4f4d"),
+		AllowFailure: false,
+		CallData:     common.FromHex("0x95d89b41")})
+
+	results := utils.Aggregate3Read(client, params3)
+
+	fmt.Println("totalSupply:", utils.Bytes2Big(results[0].ReturnData))
+	fmt.Println("symbol:", utils.DynamicBytes2String(results[1].ReturnData))
+
 }

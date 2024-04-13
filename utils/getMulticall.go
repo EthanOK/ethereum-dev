@@ -73,3 +73,60 @@ func AggregateRead(client *ethclient.Client, caller common.Address, calls []Aggr
 	// fmt.Println("Return data:", returnData)
 	return returnData
 }
+
+type AggregateCall3 struct {
+	Target       common.Address
+	AllowFailure bool
+	CallData     []byte
+}
+
+type Aggregate3Result struct {
+	Success    bool
+	ReturnData []byte
+}
+
+func Aggregate3Read(client *ethclient.Client, calls []AggregateCall3) (results []Aggregate3Result) {
+
+	multicall3Abi, err := abi.JSON(strings.NewReader(multicall3.Multicall3ABI))
+	if err != nil {
+		return nil
+	}
+
+	calldata, err := multicall3Abi.Pack("aggregate3", calls)
+	if err != nil {
+		fmt.Println("Failed to pack data:", err)
+		return nil
+	}
+
+	result, err := client.CallContract(context.Background(), ethereum.CallMsg{
+		To:   &config.Multicall3Address,
+		Data: calldata,
+	}, nil)
+	if err != nil {
+		fmt.Println("Failed to call contract:", err)
+		return nil
+
+	}
+
+	parsedResult, err := multicall3Abi.Unpack("aggregate3", result)
+	if err != nil {
+		fmt.Println("Failed to unpack result:", err)
+		return nil
+	}
+
+	for _, v := range parsedResult {
+		// fmt.Printf("%T\n", v)
+
+		for _, vv := range v.([]struct {
+			Success    bool    "json:\"success\""
+			ReturnData []uint8 "json:\"returnData\""
+		}) {
+			results = append(results, Aggregate3Result{
+				Success:    vv.Success,
+				ReturnData: vv.ReturnData,
+			})
+		}
+	}
+
+	return results
+}
