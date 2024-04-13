@@ -34,44 +34,52 @@ type AggregateCall struct {
 	CallData []byte
 }
 
-func AggregateRead(client *ethclient.Client, caller common.Address, calls []AggregateCall) [][]byte {
+type AggregateResult struct {
+	BlockNumber *big.Int
+	ReturnData  [][]byte
+}
 
-	// 解析 Multicall3 合约ABI
+func AggregateRead(client *ethclient.Client, calls []AggregateCall) AggregateResult {
+	var result AggregateResult
+
 	multicall3Abi, err := abi.JSON(strings.NewReader(multicall3.Multicall3ABI))
 	if err != nil {
-		return nil
+		return result
 	}
 
 	calldata, err := multicall3Abi.Pack("aggregate", calls)
 	if err != nil {
 		fmt.Println("Failed to pack data:", err)
-		return nil
+		return result
 	}
 
-	result, err := client.CallContract(context.Background(), ethereum.CallMsg{
-		// From: caller,
+	result_, err := client.CallContract(context.Background(), ethereum.CallMsg{
 		To:   &config.Multicall3Address,
 		Data: calldata,
 	}, nil)
-
 	if err != nil {
 		fmt.Println("Failed to call contract:", err)
-		return nil
+		return result
 
 	}
-	// uint256 blockNumber, bytes[] memory returnData
-	// 解析返回值
 
-	parsedResult, err := multicall3Abi.Unpack("aggregate", result)
+	parsedResult, err := multicall3Abi.Unpack("aggregate", result_)
 	if err != nil {
 		fmt.Println("Failed to unpack result:", err)
-		return nil
+		return result
 	}
-	// blockNumber := parsedResult[0].(*big.Int)
-	// fmt.Println("Block number:", blockNumber)
-	returnData := parsedResult[1].([][]byte)
-	// fmt.Println("Return data:", returnData)
-	return returnData
+
+	for _, v := range parsedResult {
+		// fmt.Printf("%T\n", v)
+		if blockNumber, ok := v.(*big.Int); ok {
+			result.BlockNumber = blockNumber
+		} else if returnData, ok := v.([][]uint8); ok {
+			result.ReturnData = returnData
+		}
+
+	}
+
+	return result
 }
 
 type AggregateCall3 struct {
@@ -116,7 +124,6 @@ func Aggregate3Read(client *ethclient.Client, calls []AggregateCall3) (results [
 
 	for _, v := range parsedResult {
 		// fmt.Printf("%T\n", v)
-
 		for _, vv := range v.([]struct {
 			Success    bool    "json:\"success\""
 			ReturnData []uint8 "json:\"returnData\""

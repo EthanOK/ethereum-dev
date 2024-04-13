@@ -29,13 +29,11 @@ func TestMulticall3() {
 		Target:   common.HexToAddress("0x709B78B36b7208f668A3823c1d1992C0805E4f4d"),
 		CallData: common.FromHex("0x95d89b41")})
 
-	returnData := utils.AggregateRead(client, common.HexToAddress(config.ACCOUNT_Vitalik), params)
+	returnData := utils.AggregateRead(client, params)
 
-	totalSupply := utils.Bytes2Big(returnData[0])
-
-	symbol := utils.DynamicBytes2String(returnData[1])
-	fmt.Println("totalSupply:", totalSupply)
-	fmt.Println("symbol:", symbol)
+	fmt.Println("blockNumber:", returnData.BlockNumber)
+	fmt.Println("totalSupply:", utils.Bytes2Big(returnData.ReturnData[0]))
+	fmt.Println("symbol:", utils.DynamicBytes2String(returnData.ReturnData[1]))
 
 	var params3 []utils.AggregateCall3
 	params3 = append(params3, utils.AggregateCall3{
