@@ -3,6 +3,7 @@ package main
 import (
 	"sync"
 
+	"gocode.ethan/ethereum-dev/async"
 	"gocode.ethan/ethereum-dev/test"
 	"gocode.ethan/ethereum-dev/utils"
 )
@@ -10,7 +11,7 @@ import (
 var wg sync.WaitGroup
 
 func main() {
-	wg.Add(1)
+	wg.Add(2)
 
 	utils.InitDB()
 
@@ -40,7 +41,11 @@ func main() {
 	go func() {
 		defer wg.Done()
 		test.TestMulTopicsEvent()
+	}()
 
+	go func() {
+		defer wg.Done()
+		async.StartKafka()
 	}()
 
 	wg.Wait()
