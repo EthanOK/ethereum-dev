@@ -25,6 +25,7 @@ func HandleERC20TransferEvent(log types.Log, timestamp uint64) {
 		Timestamp:   timestamp,
 		BlockNumber: log.BlockNumber,
 		TxHash:      log.TxHash.Hex(),
+		Index:       uint64(log.Index),
 	}
 
 	err := utils.GormDB_EthereumDev.Create(&erc20Transfer).Error

@@ -24,7 +24,7 @@ func StartKafka() {
 	c := getclient.GetKafkaConsumer(consumer_group, kafka_key, kafka_secret)
 
 	// []string{"ethereum_contracts", "ethereum.erc721.transfer"}
-	c.SubscribeTopics([]string{"ethereum.erc721.transfer"}, nil)
+	c.SubscribeTopics([]string{"ethereum_contracts"}, nil)
 
 	// A signal handler or similar could be used to set this to false to break the loop.
 	run := true

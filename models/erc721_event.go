@@ -8,7 +8,8 @@ type ERC721Transfer struct {
 	From        string
 	To          string
 	TokenId     string
-	TxHash      string
+	TxHash      string `gorm:"type:varchar(100)"`
+	Index       uint64
 	Timestamp   uint64
 	BlockNumber uint64
 }

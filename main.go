@@ -3,7 +3,6 @@ package main
 import (
 	"sync"
 
-	"gocode.ethan/ethereum-dev/async"
 	"gocode.ethan/ethereum-dev/test"
 	"gocode.ethan/ethereum-dev/utils"
 )
@@ -45,7 +44,7 @@ func main() {
 
 	go func() {
 		defer wg.Done()
-		async.StartKafka()
+		// async.StartKafka()
 	}()
 
 	wg.Wait()

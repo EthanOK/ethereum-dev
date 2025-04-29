@@ -8,7 +8,8 @@ type ERC20Transfer struct {
 	From        string
 	To          string
 	Value       string
-	TxHash      string
+	TxHash      string `gorm:"type:varchar(100)"`
+	Index       uint64
 	Timestamp   uint64
 	BlockNumber uint64
 }
