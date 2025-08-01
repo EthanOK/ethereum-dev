@@ -30,17 +30,21 @@ func TestMulTopicsEvent() {
 	startListenEvent(client, utils.StringToBig(startBlockNumber))
 
 }
+
 func startListenEvent(client *ethclient.Client, startBlockNumber *big.Int) {
 
-	// 定时任务 6s 执行一次
-	ticker := time.NewTicker(6 * time.Second)
+	// 定时任务 1s 执行一次
+	ticker := time.NewTicker(1 * time.Second)
 
 	for {
-
 		block, err_ := client.BlockByNumber(context.Background(), startBlockNumber)
 		if err_ != nil {
 
 			fmt.Println("区块还没产生：", startBlockNumber)
+
+			if err_.Error() == "not found" {
+				ticker.Reset(12 * time.Second)
+			}
 
 		} else {
 			ERC6551AccountCreated_Topic0 := common.HexToHash(config.ERC6551AccountCreated_Topic0)
@@ -55,11 +59,7 @@ func startListenEvent(client *ethclient.Client, startBlockNumber *big.Int) {
 			// 保存下一个区块至数据库
 			startBlockNumber.Add(startBlockNumber, big.NewInt(1))
 			controllers.UpdataConfig(config.F_StartBlockNumber, startBlockNumber.String())
-
 		}
-
 		<-ticker.C
-
 	}
-
 }
