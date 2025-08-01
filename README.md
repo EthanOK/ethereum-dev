@@ -10,9 +10,29 @@ https://geth.ethereum.org/docs
 
 https://www.topgoer.com/
 
+## solc
+
+### install
+
+```
+brew install solc-select
+
+solc-select use 0.8.20
+```
+
 ## Abigen
 
 https://geth.ethereum.org/docs/tools/abigen
+
+### install
+
+```
+go install github.com/ethereum/go-ethereum/cmd/abigen@latest
+
+export PATH="$(go env GOPATH)/bin:$PATH"
+```
+
+## generate go package
 
 `solc --abi erc20.sol -o build`
 
@@ -21,20 +41,6 @@ https://geth.ethereum.org/docs/tools/abigen
 `solc --abi erc721.sol -o build`
 
 `abigen --abi IERC721.abi --pkg erc721 --type ERC721 --out erc721.go`
-
-### MAC System
-
-```
-solcjs --abi IERC6551Registry.sol -o build
-
-abigen --abi IERC6551Registry.abi --pkg erc6551 --type ERC6551Registry --out erc6551Registry.go
-
-<!-- ./solidity -->
-solcjs --abi Multicall3.sol -o build
-<!-- ./solidity/build -->
-abigen --abi Multicall3.abi --pkg multicall3 --type Multicall3 --out multicall3.go
-
-```
 
 ## Request
 
