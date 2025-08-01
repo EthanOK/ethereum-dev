@@ -46,7 +46,7 @@ abigen --abi Multicall3.abi --pkg multicall3 --type Multicall3 --out multicall3.
 
 ### Get
 
-go version: 1.20.7
+go version: 1.24.0
 
 # ethereum-dev doc
 
