@@ -11,32 +11,46 @@ import (
 	"gocode.ethan/ethereum-dev/contracts/erc6551"
 	"gocode.ethan/ethereum-dev/models"
 	"gocode.ethan/ethereum-dev/utils"
+	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 func HandleERC6551AccountCreatedEvent(log types.Log, timestamp uint64) {
 
-	// 解析 Topics 参数
+	accountCreated := ProcessERC6551AccountCreatedEvent(log, timestamp)
+
+	error_ := utils.GormDB_EthereumDev.Create(&accountCreated).Error
+
+	if error_ != nil {
+		fmt.Println("插入数据重复")
+	}
+}
+
+func BatchHandleERC6551AccountCreatedEvent(db *gorm.DB, logs []types.Log, timestamp uint64) error {
+	var accountCreateds []models.ERC6551AccountCreated
+	for _, log := range logs {
+		accountCreated := ProcessERC6551AccountCreatedEvent(log, timestamp)
+		accountCreateds = append(accountCreateds, accountCreated)
+	}
+
+	if len(accountCreateds) > 0 {
+		err := db.Clauses(clause.OnConflict{DoNothing: true}).CreateInBatches(accountCreateds, 100).Error
+		if err != nil {
+			// 记录日志并返回错误
+			fmt.Println("Error inserting batch ERC721Transfers:", err)
+			return err
+		}
+	}
+	return nil
+
+}
+
+func ProcessERC6551AccountCreatedEvent(log types.Log, timestamp uint64) models.ERC6551AccountCreated {
+
 	impl := common.BytesToAddress(log.Topics[1].Bytes()).Hex()
 	tokenContract := common.BytesToAddress(log.Topics[2].Bytes()).Hex()
 	tokenId := log.Topics[3].Big().String()
 
-	// TODO：方式一 解析 log.Data 参数
-	// address_, _ := abi.NewType("address", "", nil)
-	// bytes32_, _ := abi.NewType("bytes32", "", nil)
-	// uint256_, _ := abi.NewType("uint256", "", nil)
-
-	// arguments := abi.Arguments{
-	// 	{Type: address_},
-	// 	{Type: bytes32_},
-	// 	{Type: uint256_},
-	// }
-
-	// parsed, err := arguments.UnpackValues(log.Data)
-	// if err != nil {
-	// 	panic(err)
-	// }
-
-	// TODO：方式二 解析 log.Data 参数
 	erc6551RegistryAbi, _ := abi.JSON(strings.NewReader(erc6551.ERC6551RegistryABI))
 
 	parsed, _ := erc6551RegistryAbi.Unpack("ERC6551AccountCreated", log.Data)
@@ -58,10 +72,5 @@ func HandleERC6551AccountCreatedEvent(log types.Log, timestamp uint64) {
 		TokenBoundAccount:       tokenBoundAccount,
 		Salt:                    salt,
 		ChainId:                 chainId}
-
-	error_ := utils.GormDB_EthereumDev.Create(&accountCreated).Error
-
-	if error_ != nil {
-		fmt.Println("插入数据重复")
-	}
+	return accountCreated
 }
